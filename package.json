@@ -1,0 +1,23 @@
+{
+  "name": "vscode-ajv",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/askirmas/vscode-ajv.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/askirmas/vscode-ajv/issues"
+  },
+  "homepage": "https://github.com/askirmas/vscode-ajv#readme",
+  "author": {
+    "name": "Andrii Kirmas",
+    "url": "https://about.me/kirmas",
+    "email": "kirmas@phystech.edu"
+  }
+}
