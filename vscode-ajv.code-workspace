@@ -4,5 +4,14 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"json.schemas": [
+			{
+				"fileMatch": [
+					"schemas/draft07.json"
+				],
+				"url": "./schemas/draft07.json"
+			}
+		]
+	}
 }
