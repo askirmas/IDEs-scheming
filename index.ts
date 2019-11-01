@@ -24,9 +24,10 @@ export default function main(
     new (require('ajv'))(
       {schemaId: 'auto'}
     )
-  ).addMetaSchema(
+  )/* // Not required if this one first use as data and as schema only afterwards
+  .addMetaSchema(
     require('./schemas/draft04-strict.json')
-  ),
+  )*/,
   //TODO: read .gitignore and etc stuff
   ignore: string | string[] = "node_modules/**"
 ) {

@@ -12,7 +12,7 @@
 					"./schemas/draft06-strict.json",
 					"./schemas/draft07-strict.json"
 				],
-				"url": "./schemas/draft04-strict.json"
+				"url": "./schemas/draft07-strict.json"
 			},
 			{
 				"fileMatch": [
@@ -28,7 +28,7 @@
 					"./schemas/draft06-strict.json",
 					"./schemas/draft07-strict.json"
 				],
-				"url": "./schemas/draft07-strict.json"
+				"url": "./schemas/draft04-strict.json"
 			}
 		]
 	}

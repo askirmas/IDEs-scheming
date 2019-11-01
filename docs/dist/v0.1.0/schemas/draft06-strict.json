@@ -1,6 +1,7 @@
 {
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "http://json-schema.org/draft-06/schema#",
+    "$schema": "https://askirmas.github.io/vscode-ajv/dist/v0.1.0/schemas/draft06-strict.json",
+    "$id": "https://askirmas.github.io/vscode-ajv/dist/v0.1.0/schemas/draft06-strict.json",
+    "id": "https://askirmas.github.io/vscode-ajv/dist/v0.1.0/schemas/draft06-strict.json",
     "title": "Core schema meta-schema",
     "additionalProperties": false,
     "definitions": {

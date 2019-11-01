@@ -17,10 +17,13 @@ if (typeof require !== 'undefined' && require.main === module) {
 /**
 * @param {string}path
 */
-function main(ajv, 
+function main(ajv /* // Not required if this one first use as data and as schema only afterwards
+.addMetaSchema(
+  require('./schemas/draft04-strict.json')
+)*/, 
 //TODO: read .gitignore and etc stuff
 ignore) {
-    if (ajv === void 0) { ajv = (new (require('ajv'))({ schemaId: 'auto' })).addMetaSchema(require('./schemas/draft04-strict.json')); }
+    if (ajv === void 0) { ajv = (new (require('ajv'))({ schemaId: 'auto' })); }
     if (ignore === void 0) { ignore = "node_modules/**"; }
     var wsPattern = '*.code-workspace', wss = glob_1.default.sync(wsPattern);
     if (wss.length === 0)
