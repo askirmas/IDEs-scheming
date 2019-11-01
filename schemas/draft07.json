@@ -31,9 +31,9 @@
     },
     "type": ["object", "boolean"],
     "properties": {
-        "$id": {
-            "type": "string",
-            "format": "uri-reference"
+        "id": {
+          "type": "string",
+          "format": "uri-reference"
         },
         "$schema": {
             "type": "string",
@@ -98,11 +98,6 @@
         "properties": {
             "type": "object",
             "additionalProperties": { "$ref": "#" }
-        },
-        "patternProperties": {
-            "type": "object",
-            "additionalProperties": { "$ref": "#" },
-            "propertyNames": { "format": "regex" }
         },
         "dependencies": {
             "type": "object",
