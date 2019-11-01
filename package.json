@@ -19,5 +19,12 @@
     "name": "Andrii Kirmas",
     "url": "https://about.me/kirmas",
     "email": "kirmas@phystech.edu"
+  },
+  "dependencies": {
+    "ajv": "^6.10.2",
+    "glob": "^7.1.5"
+  },
+  "devDependencies": {
+    "typescript": "^3.6.4"
   }
 }
