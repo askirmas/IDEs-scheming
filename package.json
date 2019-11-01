@@ -2,10 +2,11 @@
   "name": "vscode-ajv",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "tsc",
-    "dev": "tsmon"
+    "dev:bad": "tsmon index.ts",
+    "dev": "ts-node-dev --respawn --transpileOnly index.ts"
   },
   "repository": {
     "type": "git",
@@ -26,12 +27,11 @@
     "glob": "^7.1.5"
   },
   "devDependencies": {
-    "nodemon": "^1.19.4",
     "ts-node-dev": "^1.0.0-pre.43",
-    "typescript": "^3.6.4",
     "tsmon": "^0.5.1",
     "@types/ajv": "^1.0.0",
     "@types/glob": "^7.1.1",
-    "@types/node": "^12.12.3"
+    "@types/node": "^12.12.3",
+    "typescript": "^3.6.4"
   }
 }
