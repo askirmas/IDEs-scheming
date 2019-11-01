@@ -1,6 +1,5 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://json-schema.org/draft-07/schema#",
     "title": "Core schema meta-schema",
     "definitions": {
         "schemaArray": {
@@ -59,29 +58,20 @@
         "description": {
             "type": "string"
         },
-        "default": true,
         "readOnly": {
-            "type": "boolean",
-            "default": false
-        },
-        "examples": {
-            "type": "array",
-            "items": true
+            "type": "boolean"
         },
         "multipleOf": {
             "type": "number",
-            "exclusiveMinimum": 0
+            "minimum": 0,
+            "not": {
+              "enum": [0]
+            }
         },
         "maximum": {
             "type": "number"
         },
-        "exclusiveMaximum": {
-            "type": "number"
-        },
         "minimum": {
-            "type": "number"
-        },
-        "exclusiveMinimum": {
             "type": "number"
         },
         "maxLength": { "$ref": "#/definitions/nonNegativeInteger" },
@@ -95,14 +85,12 @@
             "anyOf": [
                 { "$ref": "#" },
                 { "$ref": "#/definitions/schemaArray" }
-            ],
-            "default": true
+            ]
         },
         "maxItems": { "$ref": "#/definitions/nonNegativeInteger" },
         "minItems": { "$ref": "#/definitions/nonNegativeIntegerDefault0" },
         "uniqueItems": {
-            "type": "boolean",
-            "default": false
+            "type": "boolean"
         },
         "contains": { "$ref": "#" },
         "maxProperties": { "$ref": "#/definitions/nonNegativeInteger" },
@@ -111,19 +99,16 @@
         "additionalProperties": { "$ref": "#" },
         "definitions": {
             "type": "object",
-            "additionalProperties": { "$ref": "#" },
-            "default": {}
+            "additionalProperties": { "$ref": "#" }
         },
         "properties": {
             "type": "object",
-            "additionalProperties": { "$ref": "#" },
-            "default": {}
+            "additionalProperties": { "$ref": "#" }
         },
         "patternProperties": {
             "type": "object",
             "additionalProperties": { "$ref": "#" },
-            "propertyNames": { "format": "regex" },
-            "default": {}
+            "propertyNames": { "format": "regex" }
         },
         "dependencies": {
             "type": "object",
@@ -135,10 +120,9 @@
             }
         },
         "propertyNames": { "$ref": "#" },
-        "const": true,
         "enum": {
             "type": "array",
-            "items": true,
+            "items": {},
             "minItems": 1,
             "uniqueItems": true
         },
@@ -163,6 +147,5 @@
         "anyOf": { "$ref": "#/definitions/schemaArray" },
         "oneOf": { "$ref": "#/definitions/schemaArray" },
         "not": { "$ref": "#" }
-    },
-    "default": true
+    }
 }

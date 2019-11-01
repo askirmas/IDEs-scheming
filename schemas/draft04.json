@@ -1,6 +1,6 @@
 {
-    "id": "draft-04",
-    "$schema": "http://json-schema.org/draft-04/schem#",
+    "id": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "description": "Core schema meta-schema",
     "definitions": {
         "schemaArray": {
@@ -39,25 +39,18 @@
         "description": {
             "type": "string"
         },
-        "default": {},
         "multipleOf": {
             "type": "number",
             "minimum": 0,
-            "exclusiveMinimum": true
+            "not": {
+                "enum": [0]
+            }
         },
         "maximum": {
             "type": "number"
         },
-        "exclusiveMaximum": {
-            "type": "boolean",
-            "default": false
-        },
         "minimum": {
             "type": "number"
-        },
-        "exclusiveMinimum": {
-            "type": "boolean",
-            "default": false
         },
         "maxLength": { "$ref": "#/definitions/positiveInteger" },
         "minLength": { "$ref": "#/definitions/positiveIntegerDefault0" },
@@ -69,21 +62,18 @@
             "anyOf": [
                 { "type": "boolean" },
                 { "$ref": "#" }
-            ],
-            "default": {}
+            ]
         },
         "items": {
             "anyOf": [
                 { "$ref": "#" },
                 { "$ref": "#/definitions/schemaArray" }
-            ],
-            "default": {}
+            ]
         },
         "maxItems": { "$ref": "#/definitions/positiveInteger" },
         "minItems": { "$ref": "#/definitions/positiveIntegerDefault0" },
         "uniqueItems": {
-            "type": "boolean",
-            "default": false
+            "type": "boolean"
         },
         "maxProperties": { "$ref": "#/definitions/positiveInteger" },
         "minProperties": { "$ref": "#/definitions/positiveIntegerDefault0" },
@@ -92,23 +82,19 @@
             "anyOf": [
                 { "type": "boolean" },
                 { "$ref": "#" }
-            ],
-            "default": {}
+            ]
         },
         "definitions": {
             "type": "object",
-            "additionalProperties": { "$ref": "#" },
-            "default": {}
+            "additionalProperties": { "$ref": "#" }
         },
         "properties": {
             "type": "object",
-            "additionalProperties": { "$ref": "#" },
-            "default": {}
+            "additionalProperties": { "$ref": "#" }
         },
         "patternProperties": {
             "type": "object",
-            "additionalProperties": { "$ref": "#" },
-            "default": {}
+            "additionalProperties": { "$ref": "#" }
         },
         "dependencies": {
             "type": "object",
@@ -144,6 +130,5 @@
     "dependencies": {
         "exclusiveMaximum": [ "maximum" ],
         "exclusiveMinimum": [ "minimum" ]
-    },
-    "default": {}
+    }
 }
