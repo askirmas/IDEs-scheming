@@ -1,8 +1,8 @@
 {
-    "$schema": "https://askirmas.github.io/vscode-ajv/dist/v0.1.0/schemas/draft07-strict.json",
-    "$id": "https://askirmas.github.io/vscode-ajv/dist/v0.1.0/schemas/draft07-strict.json",
-    "id": "https://askirmas.github.io/vscode-ajv/dist/v0.1.0/schemas/draft07-strict.json",
-    "title": "Core schema meta-schema",
+    "$schema": "https://askirmas.github.io/json-schemas-at-ide/dist/v0.1.0/schemas/draft07-strict.json",
+    "$id": "https://askirmas.github.io/json-schemas-at-ide/dist/v0.1.0/schemas/draft07-strict.json",
+    "id": "https://askirmas.github.io/json-schemas-at-ide/dist/v0.1.0/schemas/draft07-strict.json",
+    "title": "Core schema meta-schema Strict draft 07",
     "additionalProperties": false,
     "definitions": {
         "schemaArray": {
