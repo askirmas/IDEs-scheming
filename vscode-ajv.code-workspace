@@ -8,27 +8,27 @@
 		"json.schemas": [
 			{
 				"fileMatch": [
-					"./schemas/draft04.json",
-					"./schemas/draft06.json",
-					"./schemas/draft07.json"
+					"./schemas/draft04-strict.json",
+					"./schemas/draft06-strict.json",
+					"./schemas/draft07-strict.json"
 				],
-				"url": "./schemas/draft04.json"
+				"url": "./schemas/draft04-strict.json"
 			},
 			{
 				"fileMatch": [
-					"./schemas/draft04.json",
-					"./schemas/draft06.json",
-					"./schemas/draft07.json"
+					"./schemas/draft04-strict.json",
+					"./schemas/draft06-strict.json",
+					"./schemas/draft07-strict.json"
 				],
-				"url": "./schemas/draft06.json"
+				"url": "./schemas/draft06-strict.json"
 			},
 			{
 				"fileMatch": [
-					"./schemas/draft04.json",
-					"./schemas/draft06.json",
-					"./schemas/draft07.json"
+					"./schemas/draft04-strict.json",
+					"./schemas/draft06-strict.json",
+					"./schemas/draft07-strict.json"
 				],
-				"url": "./schemas/draft07.json"
+				"url": "./schemas/draft07-strict.json"
 			}
 		]
 	}

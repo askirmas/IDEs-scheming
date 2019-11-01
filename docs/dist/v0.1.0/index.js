@@ -20,7 +20,7 @@ if (typeof require !== 'undefined' && require.main === module) {
 function main(ajv, 
 //TODO: read .gitignore and etc stuff
 ignore) {
-    if (ajv === void 0) { ajv = new (require('ajv'))({ schemaId: 'auto' }); }
+    if (ajv === void 0) { ajv = (new (require('ajv'))({ schemaId: 'auto' })).addMetaSchema(require('./schemas/draft04-strict.json')); }
     if (ignore === void 0) { ignore = "node_modules/**"; }
     var wsPattern = '*.code-workspace', wss = glob_1.default.sync(wsPattern);
     if (wss.length === 0)
@@ -61,11 +61,10 @@ exports.default = main;
 function readJson(path) {
     try {
         return JSON.parse(
-        //@ts-ignore
+        //@ts-ignore Argument of type 'Buffer' is not assignable to parameter of type 'string'.ts(2345)
         fs_1.default.readFileSync(path));
     }
     catch (e) {
-        console.error(path + ":\n" + e);
-        process.exit(1);
+        throw path + ":\n" + e;
     }
 }

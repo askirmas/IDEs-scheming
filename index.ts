@@ -20,7 +20,13 @@ if (typeof require !== 'undefined' && require.main === module) {
 * @param {string}path 
 */
 export default function main(
-  ajv = (new (require('ajv'))({schemaId: 'auto'})).addMetaSchema(require('./schemas/draft04.json')),
+  ajv = (
+    new (require('ajv'))(
+      {schemaId: 'auto'}
+    )
+  ).addMetaSchema(
+    require('./schemas/draft04-strict.json')
+  ),
   //TODO: read .gitignore and etc stuff
   ignore: string | string[] = "node_modules/**"
 ) {
@@ -72,11 +78,10 @@ export default function main(
 function readJson(path: string) {
   try {
     return JSON.parse(
-      //@ts-ignore
+      //@ts-ignore Argument of type 'Buffer' is not assignable to parameter of type 'string'.ts(2345)
       fs.readFileSync(path)
-      )
-    } catch (e) {
-      console.error(`${path}:\n${e}`)
-      process.exit(1)
-    }
+    )
+  } catch (e) {
+    throw `${path}:\n${e}`
   }
+}
