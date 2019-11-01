@@ -69,6 +69,7 @@
         "description": {
             "type": "string"
         },
+        "default": {},
         "multipleOf": {
             "type": "number",
             "minimum": 0,
@@ -102,7 +103,8 @@
                 {
                     "$ref": "#"
                 }
-            ]
+            ],
+            "default": {}
         },
         "items": {
             "anyOf": [
@@ -112,7 +114,8 @@
                 {
                     "$ref": "#/definitions/schemaArray"
                 }
-            ]
+            ],
+            "default": {}
         },
         "maxItems": {
             "$ref": "#/definitions/positiveInteger"
@@ -121,7 +124,8 @@
             "$ref": "#/definitions/positiveIntegerDefault0"
         },
         "uniqueItems": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": false
         },
         "maxProperties": {
             "$ref": "#/definitions/positiveInteger"
@@ -140,25 +144,29 @@
                 {
                     "$ref": "#"
                 }
-            ]
+            ],
+            "default": {}
         },
         "definitions": {
             "type": "object",
             "additionalProperties": {
                 "$ref": "#"
-            }
+            },
+            "default": {}
         },
         "properties": {
             "type": "object",
             "additionalProperties": {
                 "$ref": "#"
-            }
+            },
+            "default": {}
         },
         "patternProperties": {
             "type": "object",
             "additionalProperties": {
                 "$ref": "#"
-            }
+            },
+            "default": {}
         },
         "dependencies": {
             "type": "object",
@@ -207,7 +215,6 @@
         },
         "not": {
             "$ref": "#"
-        },
-        "default": {}
+        }
     }
 }
