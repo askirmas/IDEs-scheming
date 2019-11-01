@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Core schema meta-schema",
+    "additionalProperties": false,
     "definitions": {
         "schemaArray": {
             "type": "array",
@@ -10,12 +11,6 @@
         "nonNegativeInteger": {
             "type": "integer",
             "minimum": 0
-        },
-        "nonNegativeIntegerDefault0": {
-            "allOf": [
-                { "$ref": "#/definitions/nonNegativeInteger" },
-                { "default": 0 }
-            ]
         },
         "simpleTypes": {
             "enum": [
@@ -31,8 +26,7 @@
         "stringArray": {
             "type": "array",
             "items": { "type": "string" },
-            "uniqueItems": true,
-            "default": []
+            "uniqueItems": true
         }
     },
     "type": ["object", "boolean"],
@@ -75,7 +69,7 @@
             "type": "number"
         },
         "maxLength": { "$ref": "#/definitions/nonNegativeInteger" },
-        "minLength": { "$ref": "#/definitions/nonNegativeIntegerDefault0" },
+        "minLength": { "$ref": "#/definitions/nonNegativeInteger" },
         "pattern": {
             "type": "string",
             "format": "regex"
@@ -88,13 +82,13 @@
             ]
         },
         "maxItems": { "$ref": "#/definitions/nonNegativeInteger" },
-        "minItems": { "$ref": "#/definitions/nonNegativeIntegerDefault0" },
+        "minItems": { "$ref": "#/definitions/nonNegativeInteger" },
         "uniqueItems": {
             "type": "boolean"
         },
         "contains": { "$ref": "#" },
         "maxProperties": { "$ref": "#/definitions/nonNegativeInteger" },
-        "minProperties": { "$ref": "#/definitions/nonNegativeIntegerDefault0" },
+        "minProperties": { "$ref": "#/definitions/nonNegativeInteger" },
         "required": { "$ref": "#/definitions/stringArray" },
         "additionalProperties": { "$ref": "#" },
         "definitions": {
@@ -146,6 +140,7 @@
         "allOf": { "$ref": "#/definitions/schemaArray" },
         "anyOf": { "$ref": "#/definitions/schemaArray" },
         "oneOf": { "$ref": "#/definitions/schemaArray" },
-        "not": { "$ref": "#" }
+        "not": { "$ref": "#" },
+        "default": {}
     }
 }

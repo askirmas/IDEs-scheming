@@ -20,11 +20,11 @@ if (typeof require !== 'undefined' && require.main === module) {
 * @param {string}path 
 */
 export default function main(
-  ajv = new (require('ajv'))({schemaId: 'auto'}),
+  ajv = (new (require('ajv'))({schemaId: 'auto'})).addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json')),
   //TODO: read .gitignore and etc stuff
   ignore: string | string[] = "node_modules/**"
 ) {
-  
+
   const wsPattern = '*.code-workspace'
   , wss = glob.sync(wsPattern)
   if (wss.length === 0)
