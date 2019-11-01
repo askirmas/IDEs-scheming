@@ -1,20 +1,29 @@
 import fs from 'fs'
 import glob from 'glob'
 
-interface iCodeWorkspace {
-  settings: {
-    'json.schemas': {fileMatch: string[], url: string}[]
-  }
+interface iVsCode {
+  'json.schemas': {fileMatch: string[], url: string}[]
 }
 
+const wsPattern = '*.code-workspace'
+, settingsPath = '.vscode/settings.json'
+
+
 if (typeof require !== 'undefined' && require.main === module) {
+  let result: any = true
   try {
-    main()
+    result = main()
   } catch (e) {
-    console.error(`\x1b[31m${e}\x1b[m`)
+    result = e
+  } finally {
+    if (result === true)
+      process.exit(0);
+    console.error(`\x1b[31m${result}\x1b[m`)
     process.exit(1)
   }
 }
+
+// Check all json's
 
 /**
 * @param {string}path 
@@ -32,48 +41,67 @@ export default function main(
   ignore: string | string[] = "node_modules/**"
 ) {
 
-  const wsPattern = '*.code-workspace'
-  , wss = glob.sync(wsPattern)
-  if (wss.length === 0)
-    throw `No ${wsPattern} found`
+  let validateEntriesPacks = glob.sync(wsPattern)
+  .map(wsPath => fs.existsSync(wsPath) && readJson(wsPath).settings)
+  
+  validateEntriesPacks.push(fs.existsSync(settingsPath) && readJson(settingsPath))
 
-  return wss.every(wsPath => {
-    const ws : iCodeWorkspace = readJson(wsPath)
-    if (!('settings' in ws && 'json.schemas' in ws.settings))
-      throw `Nothing to validate in ${wsPath}`
-
-    return ws.settings['json.schemas']
+  validateEntriesPacks = validateEntriesPacks
+  .filter(x => x && typeof x === 'object' && x['json.schemas'])
+  
+  return validateEntriesPacks.length === 0 
+  ? 'No IDE settings was found'
+  : validateEntriesPacks
+  .filter(x => x && typeof x === 'object' && x['json.schemas'])
+  .every(({"json.schemas": validateEntries}) => {
+    return validateEntries.length === 0
+    ? "Nothing to validate"
+    : validateEntries
+    //@ts-ignore
     .every(({fileMatch, url}) => {
       if (url.startsWith('http')) {
         console.warn('Schemas by URL is not supported yet')
         return true
       }
-
-      const validate = ajv.compile(readJson(url))
-      return fileMatch.every(pattern => {
-        const paths = glob.sync(
-          pattern.includes('/')
-          ? pattern
-          : `**/${pattern}`,
-          { ignore }
-        )
-        
-        if (paths.length === 0)
-          throw `No files under ${pattern}`
-
-        return paths.every(p => {
-          if (!validate(readJson(p)))
-            throw [
-              `#Schema.Error: ${ajv.errorsText(validate.errors)}`,
-              `path: ${p}`,
-              `pattern: ${pattern}`,
-              `schema: ${url}`
-            ].join("\n")
-          return true
-        })
-      })
+      return validateBySchema(fileMatch, url, ignore, ajv.compile(readJson(url)), e => ajv.errorsText(e))
     })
   })
+}
+
+
+type iValidator_ = (o: object) => boolean;
+interface iValidator extends iValidator_ {
+  errors: any
+}
+type iErrorText = (errors: any) => string
+
+
+function validateBySchema(patterns: string[], $schema: string, ignore: string | string[], validate: iValidator, errorsText: iErrorText) {
+  return patterns.every(pattern => {
+    const paths = glob.sync(
+      vs2globpattern(pattern),
+      { ignore }
+    )
+    
+    if (paths.length === 0)
+      throw `No files under ${pattern}`
+
+    return paths.every(path => validateObject(
+      readJson(path),
+      validate,
+      { $schema, pattern, path },
+      errorsText
+    ))
+  })
+}
+
+function validateObject(content: object, validate: iValidator, scope: {}, errorsText: iErrorText) {
+  if (!validate(content))
+    throw [
+      `#Schema.Error: ${errorsText(validate.errors)}`,
+      JSON.stringify(scope)
+    ].join("\n")
+  return true
 }
 
 function readJson(path: string) {
@@ -85,4 +113,10 @@ function readJson(path: string) {
   } catch (e) {
     throw `${path}:\n${e}`
   }
+}
+
+function vs2globpattern(pattern: string) {
+  return pattern.includes('/')
+  ? pattern
+  : `**/${pattern}` 
 }
