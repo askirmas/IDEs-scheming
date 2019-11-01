@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+git@github.com:askirmas/json-schemas-at-ide.git"
+    "url": "git+ssh://git@github.com:askirmas/json-schemas-at-ide.git"
   },
   "license": "MIT",
   "bugs": {
