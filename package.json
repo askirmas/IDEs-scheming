@@ -1,5 +1,5 @@
 {
-  "name": "vscode-ajv",
+  "name": "json-schemas-at-ide",
   "version": "0.1.0",
   "description": "",
   "main": "index.ts",
@@ -10,13 +10,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/askirmas/vscode-ajv.git"
+    "url": "git+git@github.com:askirmas/json-schemas-at-ide.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/askirmas/vscode-ajv/issues"
+    "url": "https://github.com/askirmas/json-schemas-at-ide/issues"
   },
-  "homepage": "https://github.com/askirmas/vscode-ajv#readme",
+  "homepage": "https://github.com/askirmas/json-schemas-at-ide#readme",
   "author": {
     "name": "Andrii Kirmas",
     "url": "https://about.me/kirmas",
