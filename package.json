@@ -2,11 +2,13 @@
   "name": "json-schemas-at-ide",
   "version": "0.1.0",
   "description": "",
-  "main": "index.ts",
+  "main": "./index.ts",
+  "bin": "./docs/dist/v0.1.0/index.js",
   "scripts": {
     "test": "tsc",
     "dev:bad": "tsmon index.ts",
-    "dev": "ts-node-dev --respawn --transpileOnly index.ts"
+    "dev": "ts-node-dev --respawn --transpileOnly index.ts",
+    "dev:check": "nodemon --watch '/*.ts' --exec 'ts-node' index.ts"
   },
   "repository": {
     "type": "git",
