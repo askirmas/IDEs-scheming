@@ -2,8 +2,11 @@
   "name": "json-schemas-at-ide",
   "version": "0.1.0",
   "description": "",
-  "main": "./index.ts",
-  "bin": "./docs/dist/v0.1.0/index.js",
+  "main": "./docs/dist/index.js",
+  "bin": "./docs/dist/index.js",
+  "files": [
+    "./docs/dist/index.js"
+  ],
   "scripts": {
     "test": "tsc",
     "dev:bad": "tsmon index.ts",

@@ -1,8 +1,8 @@
 {
-    "$schema": "https://askirmas.github.io/json-schemas-at-ide/dist/v0.1.0/schemas/draft07-strict.json",
-    "$id": "https://askirmas.github.io/json-schemas-at-ide/dist/v0.1.0/schemas/draft07-strict.json",
-    "id": "https://askirmas.github.io/json-schemas-at-ide/dist/v0.1.0/schemas/draft07-strict.json",
-    "title": "Core schema meta-schema Strict draft 07",
+    "$schema": "https://askirmas.github.io/json-schemas-at-ide/dist/schemas/draft04-strict.json",
+    "id": "https://askirmas.github.io/json-schemas-at-ide/dist/schemas/draft04-strict.json",
+    "$id": "https://askirmas.github.io/json-schemas-at-ide/dist/schemas/draft04-strict.json",
+    "description": "Core schema meta-schema Strict draft 04",
     "additionalProperties": false,
     "definitions": {
         "schemaArray": {
@@ -12,9 +12,19 @@
                 "$ref": "#"
             }
         },
-        "nonNegativeInteger": {
+        "positiveInteger": {
             "type": "integer",
             "minimum": 0
+        },
+        "positiveIntegerDefault0": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/positiveInteger"
+                },
+                {
+                    "default": 0
+                }
+            ]
         },
         "simpleTypes": {
             "enum": [
@@ -32,14 +42,11 @@
             "items": {
                 "type": "string"
             },
-            "uniqueItems": true,
-            "default": []
+            "minItems": 1,
+            "uniqueItems": true
         }
     },
-    "type": [
-        "object",
-        "boolean"
-    ],
+    "type": "object",
     "properties": {
         "id": {
             "type": "string",
@@ -50,26 +57,19 @@
             "format": "uri-reference"
         },
         "$schema": {
-            "type": "string",
-            "format": "uri"
+            "type": "string"
         },
         "$ref": {
             "type": "string",
             "format": "uri-reference"
         },
-        "$comment": {
-            "type": "string"
-        },
         "title": {
             "type": "string"
         },
-        "default": {},
         "description": {
             "type": "string"
         },
-        "readOnly": {
-            "type": "boolean"
-        },
+        "default": {},
         "multipleOf": {
             "type": "number",
             "minimum": 0,
@@ -86,17 +86,25 @@
             "type": "number"
         },
         "maxLength": {
-            "$ref": "#/definitions/nonNegativeInteger"
+            "$ref": "#/definitions/positiveInteger"
         },
         "minLength": {
-            "$ref": "#/definitions/nonNegativeInteger"
+            "$ref": "#/definitions/positiveIntegerDefault0"
         },
         "pattern": {
             "type": "string",
             "format": "regex"
         },
         "additionalItems": {
-            "$ref": "#"
+            "anyOf": [
+                {
+                    "type": "boolean"
+                },
+                {
+                    "$ref": "#"
+                }
+            ],
+            "default": {}
         },
         "items": {
             "anyOf": [
@@ -110,29 +118,34 @@
             "default": {}
         },
         "maxItems": {
-            "$ref": "#/definitions/nonNegativeInteger"
+            "$ref": "#/definitions/positiveInteger"
         },
         "minItems": {
-            "$ref": "#/definitions/nonNegativeInteger"
+            "$ref": "#/definitions/positiveIntegerDefault0"
         },
         "uniqueItems": {
             "type": "boolean",
             "default": false
         },
-        "contains": {
-            "$ref": "#"
-        },
         "maxProperties": {
-            "$ref": "#/definitions/nonNegativeInteger"
+            "$ref": "#/definitions/positiveInteger"
         },
         "minProperties": {
-            "$ref": "#/definitions/nonNegativeInteger"
+            "$ref": "#/definitions/positiveIntegerDefault0"
         },
         "required": {
             "$ref": "#/definitions/stringArray"
         },
         "additionalProperties": {
-            "$ref": "#"
+            "anyOf": [
+                {
+                    "type": "boolean"
+                },
+                {
+                    "$ref": "#"
+                }
+            ],
+            "default": {}
         },
         "definitions": {
             "type": "object",
@@ -142,6 +155,13 @@
             "default": {}
         },
         "properties": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#"
+            },
+            "default": {}
+        },
+        "patternProperties": {
             "type": "object",
             "additionalProperties": {
                 "$ref": "#"
@@ -161,12 +181,8 @@
                 ]
             }
         },
-        "propertyNames": {
-            "$ref": "#"
-        },
         "enum": {
             "type": "array",
-            "items": {},
             "minItems": 1,
             "uniqueItems": true
         },
@@ -188,21 +204,6 @@
         "format": {
             "type": "string"
         },
-        "contentMediaType": {
-            "type": "string"
-        },
-        "contentEncoding": {
-            "type": "string"
-        },
-        "if": {
-            "$ref": "#"
-        },
-        "then": {
-            "$ref": "#"
-        },
-        "else": {
-            "$ref": "#"
-        },
         "allOf": {
             "$ref": "#/definitions/schemaArray"
         },
@@ -215,6 +216,5 @@
         "not": {
             "$ref": "#"
         }
-    },
-    "default": {}
+    }
 }

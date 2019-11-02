@@ -1,8 +1,8 @@
 {
-    "$schema": "https://askirmas.github.io/json-schemas-at-ide/dist/v0.1.0/schemas/draft06-strict.json",
-    "$id": "https://askirmas.github.io/json-schemas-at-ide/dist/v0.1.0/schemas/draft06-strict.json",
-    "id": "https://askirmas.github.io/json-schemas-at-ide/dist/v0.1.0/schemas/draft06-strict.json",
-    "title": "Core schema meta-schema Strict draft 06",
+    "$schema": "https://askirmas.github.io/json-schemas-at-ide/dist/schemas/draft07-strict.json",
+    "$id": "https://askirmas.github.io/json-schemas-at-ide/dist/schemas/draft07-strict.json",
+    "id": "https://askirmas.github.io/json-schemas-at-ide/dist/schemas/draft07-strict.json",
+    "title": "Core schema meta-schema Strict draft 07",
     "additionalProperties": false,
     "definitions": {
         "schemaArray": {
@@ -57,16 +57,18 @@
             "type": "string",
             "format": "uri-reference"
         },
+        "$comment": {
+            "type": "string"
+        },
         "title": {
             "type": "string"
         },
+        "default": {},
         "description": {
             "type": "string"
         },
-        "default": {},
-        "examples": {
-            "type": "array",
-            "items": {}
+        "readOnly": {
+            "type": "boolean"
         },
         "multipleOf": {
             "type": "number",
@@ -162,9 +164,9 @@
         "propertyNames": {
             "$ref": "#"
         },
-        "const": {},
         "enum": {
             "type": "array",
+            "items": {},
             "minItems": 1,
             "uniqueItems": true
         },
@@ -185,6 +187,21 @@
         },
         "format": {
             "type": "string"
+        },
+        "contentMediaType": {
+            "type": "string"
+        },
+        "contentEncoding": {
+            "type": "string"
+        },
+        "if": {
+            "$ref": "#"
+        },
+        "then": {
+            "$ref": "#"
+        },
+        "else": {
+            "$ref": "#"
         },
         "allOf": {
             "$ref": "#/definitions/schemaArray"
