@@ -1,5 +1,5 @@
 {
-  "name": "json-schemas-at-ide",
+  "name": "ides-scheming",
   "version": "0.1.0",
   "description": "",
   "main": "./docs/dist/index.js",
@@ -17,13 +17,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:askirmas/json-schemas-at-ide.git"
+    "url": "git+ssh://git@github.com:askirmas/IDEs-scheming.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/askirmas/json-schemas-at-ide/issues"
+    "url": "https://github.com/askirmas/IDEs-scheming/issues"
   },
-  "homepage": "https://github.com/askirmas/json-schemas-at-ide#readme",
+  "homepage": "https://github.com/askirmas/IDEs-scheming#readme",
   "author": {
     "name": "Andrii Kirmas",
     "url": "https://about.me/kirmas",

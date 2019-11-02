@@ -1,7 +1,7 @@
 {
-    "$schema": "https://askirmas.github.io/json-schemas-at-ide/schemas/draft07-strict.json",
-    "$id": "https://askirmas.github.io/json-schemas-at-ide/schemas/draft07-strict.json",
-    "id": "https://askirmas.github.io/json-schemas-at-ide/schemas/draft07-strict.json",
+    "$schema": "https://askirmas.github.io/IDEs-scheming/schemas/draft07-strict.json",
+    "$id": "https://askirmas.github.io/IDEs-scheming/schemas/draft07-strict.json",
+    "id": "https://askirmas.github.io/IDEs-scheming/schemas/draft07-strict.json",
     "title": "Core schema meta-schema Strict draft 07",
     "additionalProperties": false,
     "definitions": {
