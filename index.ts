@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 import fs from 'fs'
 import glob from 'glob'
-
-const defaultOptions = require('./config.json')
+import defaultOptions from './config.json' 
 
 if (typeof require !== 'undefined' && require.main === module) {
   let result: any = true
@@ -110,7 +109,8 @@ function validateObject(path: string, validate: iValidator, {fileList, ...scope}
   if (!validate(readJson(path)))
     throw [
       `#Schema.Error: ${errorsText(validate.errors)}`,
-      JSON.stringify(scope)
+      ...Object.entries(scope)
+      .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
     ].join("\n")
 
   fileList && fileList.delete(path.replace(/^\.\//, ''))

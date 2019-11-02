@@ -1,8 +1,8 @@
 {
-    "$schema": "https://askirmas.github.io/json-schemas-at-ide/dist/schemas/draft07-strict.json",
-    "$id": "https://askirmas.github.io/json-schemas-at-ide/dist/schemas/draft07-strict.json",
-    "id": "https://askirmas.github.io/json-schemas-at-ide/dist/schemas/draft07-strict.json",
-    "title": "Core schema meta-schema Strict draft 07",
+    "$schema": "https://askirmas.github.io/json-schemas-at-ide/schemas/draft06-strict.json",
+    "$id": "https://askirmas.github.io/json-schemas-at-ide/schemas/draft06-strict.json",
+    "id": "https://askirmas.github.io/json-schemas-at-ide/schemas/draft06-strict.json",
+    "title": "Core schema meta-schema Strict draft 06",
     "additionalProperties": false,
     "definitions": {
         "schemaArray": {
@@ -57,18 +57,16 @@
             "type": "string",
             "format": "uri-reference"
         },
-        "$comment": {
-            "type": "string"
-        },
         "title": {
             "type": "string"
         },
-        "default": {},
         "description": {
             "type": "string"
         },
-        "readOnly": {
-            "type": "boolean"
+        "default": {},
+        "examples": {
+            "type": "array",
+            "items": {}
         },
         "multipleOf": {
             "type": "number",
@@ -164,9 +162,9 @@
         "propertyNames": {
             "$ref": "#"
         },
+        "const": {},
         "enum": {
             "type": "array",
-            "items": {},
             "minItems": 1,
             "uniqueItems": true
         },
@@ -187,21 +185,6 @@
         },
         "format": {
             "type": "string"
-        },
-        "contentMediaType": {
-            "type": "string"
-        },
-        "contentEncoding": {
-            "type": "string"
-        },
-        "if": {
-            "$ref": "#"
-        },
-        "then": {
-            "$ref": "#"
-        },
-        "else": {
-            "$ref": "#"
         },
         "allOf": {
             "$ref": "#/definitions/schemaArray"

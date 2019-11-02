@@ -5,10 +5,12 @@
   "main": "./docs/dist/index.js",
   "bin": "./docs/dist/index.js",
   "files": [
-    "./docs/dist/index.js"
+    "./index.ts",
+    "./config.json"
   ],
   "scripts": {
-    "test": "tsc",
+    "test": "tsc --noEmit",
+    "build": "rm -rf docs/dist && tsc && chmod +x ./docs/dist/index.js && ./docs/dist/index.js",
     "dev:bad": "tsmon index.ts",
     "dev": "ts-node-dev --respawn --transpileOnly index.ts",
     "dev:check": "nodemon --watch './*.ts' -e ts --exec 'ts-node' index.ts"
