@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JsonSchemaMappingsProjectConfiguration">
+    <state>
+      <map>
+        <entry key="draft07">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="draft07" />
+              <option name="relativePathToSchema" value="schemas/draft07-strict.json" />
+              <option name="schemaVersion" value="JSON schema version 7" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="pattern" value="true" />
+                    <option name="path" value="**/draft*.json" />
+                    <option name="mappingKind" value="Pattern" />
+                  </Item>
+                  <Item>
+                    <option name="directory" value="true" />
+                    <option name="path" value="docs/schemas" />
+                    <option name="mappingKind" value="Directory" />
+                  </Item>
+                  <Item>
+                    <option name="path" value="config.schema.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+      </map>
+    </state>
+  </component>
+</project>
