@@ -2,13 +2,7 @@
 import fs from 'fs'
 import glob from 'glob'
 
-interface iVsCode {
-  'json.schemas': {fileMatch: string[], url: string}[]
-}
-
-const wsPattern = '*.code-workspace'
-, settingsPath = '.vscode/settings.json'
-
+const defaultOptions = require('./config.json')
 
 if (typeof require !== 'undefined' && require.main === module) {
   let result: any = true
@@ -24,37 +18,40 @@ if (typeof require !== 'undefined' && require.main === module) {
   }
 }
 
-// Check all json's
-
-/**
-* @param {string}path 
-*/
 export default function main(
+  options = {},
   ajv = (
-    new (require('ajv'))(
-      {schemaId: 'auto'}
-    )
-  )/* // Not required if this one first use as data and as schema only afterwards
+    new (require(defaultOptions.interpreter.ref))(defaultOptions.interpreter.opts)
+  )/* // AJV- Not required if this one first use as data and as schema only afterwards
   .addMetaSchema(
     require('./schemas/draft04-strict.json')
-  )*/,
-  //TODO: read .gitignore and etc stuff
-  ignore: string | string[] = "node_modules/**"
+  )*/
 ) {
+  const opts = Object.assign({}, defaultOptions, options || {})
+  , {ignore, wsPattern, settingsPath, listPattern} = opts,
+  fileList = new Set(glob.sync(listPattern, {ignore}))
 
   let validateEntriesPacks = glob.sync(wsPattern)
-  .map(wsPath => fs.existsSync(wsPath) && readJson(wsPath).settings)
+  .map(wsPath =>
+    fs.existsSync(wsPath)
+    && (<iVsCodeWorkSpace>readJson(wsPath)).settings
+  )
   
-  validateEntriesPacks.push(fs.existsSync(settingsPath) && readJson(settingsPath))
+  validateEntriesPacks.push(
+    fs.existsSync(settingsPath)
+    && <iVsCodeSettings>readJson(settingsPath)
+  )
 
   validateEntriesPacks = validateEntriesPacks
   .filter(x => x && typeof x === 'object' && x['json.schemas'])
   
-  return validateEntriesPacks.length === 0 
+  const result = validateEntriesPacks.length === 0 
   ? 'No IDE settings was found'
-  : validateEntriesPacks
-  .filter(x => x && typeof x === 'object' && x['json.schemas'])
-  .every(({"json.schemas": validateEntries}) => {
+  : (
+    <iVsCodeSettings[]>
+    validateEntriesPacks
+    .filter(x => x && typeof x === 'object' && x['json.schemas'])
+  ).every(({"json.schemas": validateEntries}) => {
     return validateEntries.length === 0
     ? "Nothing to validate"
     : validateEntries
@@ -64,11 +61,20 @@ export default function main(
         console.warn('Schemas by URL is not supported yet')
         return true
       }
-      return validateBySchema(fileMatch, url, ignore, ajv.compile(readJson(url)), e => ajv.errorsText(e))
+      
+      return validateBySchema(fileMatch, url, ignore, ajv.compile(readJson(url)), e => ajv.errorsText(e), fileList)
     })
   })
+  
+  return result && (fileList.size === 0 || `These JSONs have no schema:\n${[...fileList.values()].join("\n")}`)
 }
 
+type iVsCodeSettings = {
+  'json.schemas': {fileMatch: string[], url: string}[]
+}
+type iVsCodeWorkSpace = {
+  "settings": iVsCodeSettings
+}
 
 type iValidator_ = (o: object) => boolean;
 interface iValidator extends iValidator_ {
@@ -76,8 +82,12 @@ interface iValidator extends iValidator_ {
 }
 type iErrorText = (errors: any) => string
 
+type iScope = {
+  fileList: Set<string>
+  [k: string]: any
+}
 
-function validateBySchema(patterns: string[], $schema: string, ignore: string | string[], validate: iValidator, errorsText: iErrorText) {
+function validateBySchema(patterns: string[], $schema: string, ignore: string | string[], validate: iValidator, errorsText: iErrorText, fileList: Set<string>) {
   return patterns.every(pattern => {
     const paths = glob.sync(
       vs2globpattern(pattern),
@@ -88,24 +98,26 @@ function validateBySchema(patterns: string[], $schema: string, ignore: string | 
       throw `No files under ${pattern}`
 
     return paths.every(path => validateObject(
-      readJson(path),
+      path,
       validate,
-      { $schema, pattern, path },
+      { fileList, $schema, pattern, path },
       errorsText
     ))
   })
 }
 
-function validateObject(content: object, validate: iValidator, scope: {}, errorsText: iErrorText) {
-  if (!validate(content))
+function validateObject(path: string, validate: iValidator, {fileList, ...scope}: Partial<iScope> = {}, errorsText: iErrorText) {
+  if (!validate(readJson(path)))
     throw [
       `#Schema.Error: ${errorsText(validate.errors)}`,
       JSON.stringify(scope)
     ].join("\n")
+
+  fileList && fileList.delete(path.replace(/^\.\//, ''))
   return true
 }
 
-function readJson(path: string) {
+function readJson(path: string) :object {
   try {
     return JSON.parse(
       //@ts-ignore Argument of type 'Buffer' is not assignable to parameter of type 'string'.ts(2345)

@@ -8,7 +8,7 @@
     "test": "tsc",
     "dev:bad": "tsmon index.ts",
     "dev": "ts-node-dev --respawn --transpileOnly index.ts",
-    "dev:check": "nodemon --watch '/*.ts' --exec 'ts-node' index.ts"
+    "dev:check": "nodemon --watch './*.ts' -e ts --exec 'ts-node' index.ts"
   },
   "repository": {
     "type": "git",
@@ -29,11 +29,12 @@
     "glob": "^7.1.5"
   },
   "devDependencies": {
-    "ts-node-dev": "^1.0.0-pre.43",
-    "tsmon": "^0.5.1",
     "@types/ajv": "^1.0.0",
     "@types/glob": "^7.1.1",
     "@types/node": "^12.12.3",
+    "nodemon": "^1.19.4",
+    "ts-node-dev": "^1.0.0-pre.43",
+    "tsmon": "^0.5.1",
     "typescript": "^3.6.4"
   }
 }

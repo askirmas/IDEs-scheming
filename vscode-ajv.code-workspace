@@ -8,19 +8,22 @@
 		"json.schemas": [
 			{
 				"fileMatch": [
-					"schemas/*.json",
+					"./schemas/*.json",
+					"docs/**/*.json"
 				],
 				"url": "./schemas/draft07-strict.json"
 			},
 			{
 				"fileMatch": [
-					"schemas/*.json"
+					"./schemas/*.json",
+					"docs/**/*.json"
 				],
 				"url": "./schemas/draft06-strict.json"
 			},
 			{
 				"fileMatch": [
-					"schemas/*.json"
+					"./schemas/*.json",
+					"docs/**/*.json"
 				],
 				"url": "./schemas/draft04-strict.json"
 			}
