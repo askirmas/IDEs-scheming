@@ -320,9 +320,17 @@
         "version": "d852d6282c8dc8156d26d6bda83ab4bde51fee05ba2fe0ecdc165ddda009d3ee",
         "signature": "d852d6282c8dc8156d26d6bda83ab4bde51fee05ba2fe0ecdc165ddda009d3ee"
       },
+      "../../node_modules/@types/xml2js/lib/processors.d.ts": {
+        "version": "c0288f54de6f544706a3150c8b579b1a975870695c4be866f727ece6a16f3976",
+        "signature": "c0288f54de6f544706a3150c8b579b1a975870695c4be866f727ece6a16f3976"
+      },
+      "../../node_modules/@types/xml2js/index.d.ts": {
+        "version": "232a20dbd107baa091280c321f417c715f328a5b2d896bec7399630ff85270f7",
+        "signature": "232a20dbd107baa091280c321f417c715f328a5b2d896bec7399630ff85270f7"
+      },
       "../../index.ts": {
-        "version": "70a1b65039e8a7794d17969fc89e00793ee0f552d91b22e0a5a3945b19a9a363",
-        "signature": "b215319e7cdc459ce1cc94a8cd2d32230f11ffdddf23bbaca5f247e7ba2e1f92"
+        "version": "90eb7362a7e2c8d3d342c5a4e94efd2cee3817693fbb975de5d878715823d36a",
+        "signature": "7bdcd3e8eac484dc438f0d92ce7a89c6d985e2f5c3942e7558294f326122ea57"
       },
       "../../node_modules/@types/strip-bom/index.d.ts": {
         "version": "4006c872e38a2c4e09c593bc0cdd32b7b4f5c4843910bea0def631c483fff6c5",
@@ -335,16 +343,22 @@
     },
     "options": {
       "resolveJsonModule": true,
+      "incremental": true,
       "target": 1,
       "module": 1,
       "declaration": true,
+      "declarationMap": true,
       "outDir": "./",
       "rootDir": "../..",
       "composite": true,
       "removeComments": true,
       "downlevelIteration": true,
       "strict": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
       "esModuleInterop": true,
+      "preserveSymlinks": true,
       "configFilePath": "../../tsconfig.json"
     },
     "referencedMap": {
@@ -918,9 +932,25 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../../node_modules/@types/xml2js/lib/processors.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../../node_modules/@types/xml2js/index.d.ts": [
+        "../../node_modules/@types/node/events.d.ts",
+        "../../node_modules/@types/xml2js/lib/processors.d.ts",
+        "../../node_modules/@types/node/ts3.2/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../../index.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/glob/index.d.ts",
+        "../../node_modules/@types/xml2js/index.d.ts",
         "../../config.json",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -1190,6 +1220,15 @@
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts"
       ],
+      "../../node_modules/@types/xml2js/index.d.ts": [
+        "../../node_modules/@types/node/events.d.ts",
+        "../../node_modules/@types/xml2js/lib/processors.d.ts",
+        "../../node_modules/@types/node/ts3.2/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../../node_modules/@types/glob/index.d.ts": [
         "../../node_modules/@types/node/events.d.ts",
         "../../node_modules/@types/minimatch/index.d.ts",
@@ -1420,6 +1459,12 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../../node_modules/@types/xml2js/lib/processors.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../../node_modules/@types/minimatch/index.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
@@ -1568,6 +1613,8 @@
       "../../node_modules/@types/node/ts3.2/index.d.ts",
       "../../node_modules/@types/minimatch/index.d.ts",
       "../../node_modules/@types/glob/index.d.ts",
+      "../../node_modules/@types/xml2js/lib/processors.d.ts",
+      "../../node_modules/@types/xml2js/index.d.ts",
       "../../index.ts",
       "../../node_modules/@types/strip-bom/index.d.ts",
       "../../node_modules/@types/strip-json-comments/index.d.ts",

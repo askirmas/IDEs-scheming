@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "description": "",
   "main": "./docs/dist/index.js",
+  "esnext": "./index.ts",
   "bin": "./docs/dist/index.js",
   "files": [
-    "./index.ts",
-    "./config.json"
+    "./dist"
   ],
   "scripts": {
     "test": "tsc --noEmit",
+    "prebuild": "npm run test",
     "build": "rm -rf docs/dist && tsc && chmod +x ./docs/dist/index.js && ./docs/dist/index.js",
     "dev:bad": "tsmon index.ts",
     "dev": "ts-node-dev --respawn --transpileOnly index.ts",

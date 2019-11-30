@@ -5,9 +5,14 @@ import xml2js from 'xml2js'
 import defaultOptions from './config.json'
 
 const xmlParser = new xml2js.Parser()
-xmlParser.parseString(fs.readFileSync('./.idea/jsonSchemas.xml'), (err, res) => {
-  console.log(JSON.stringify(res.project.component[0].state[0].map[0].entry[0].value[0].SchemaInfo))
-})
+xmlParser.parseString(
+  fs.readFileSync('./.idea/jsonSchemas.xml'),
+  (err: any, res: any) => {       
+    console.log(JSON.stringify(
+      err || res.project.component[0].state[0].map[0].entry[0].value[0].SchemaInfo
+    ))
+  }
+)
 
 if (typeof require !== 'undefined' && require.main === module) {
   let result: any = true
