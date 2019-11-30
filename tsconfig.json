@@ -20,6 +20,7 @@
   },
   "files": [
     "./config.json",
+    "./defs.ts",
     "./index.ts"
   ]
 }

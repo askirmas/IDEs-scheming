@@ -3,6 +3,7 @@ import fs from 'fs'
 import glob from 'glob'
 import xml2js from 'xml2js'
 import defaultOptions from './config.json'
+import { iValidator, iScope, iVsCodeWorkSpace, iVsCodeSettings, iErrorText } from './defs.js'
 
 const xmlParser = new xml2js.Parser()
 xmlParser.parseString(
@@ -72,32 +73,34 @@ export default function main(
         return true
       }
       
-      return validateBySchema(fileMatch, url, ignore, ajv.compile(readJson(url)), e => ajv.errorsText(e), fileList)
+      return validateBySchema(
+        fileMatch,
+        url,
+        ignore,
+        ajv.compile(readJson(url)),
+        e => ajv.errorsText(e),
+        fileList
+      )
     })
   })
   
-  return result && (fileList.size === 0 || `These JSONs have no schema:\n${[...fileList.values()].join("\n")}`)
+  return result && (
+    fileList.size === 0
+    || `These JSONs have no schema:\n${
+      [...fileList.values()].join("\n")
+    }`
+  )
 }
 
-type iVsCodeSettings = {
-  'json.schemas': {fileMatch: string[], url: string}[]
-}
-type iVsCodeWorkSpace = {
-  "settings": iVsCodeSettings
-}
 
-type iValidator_ = (o: object) => boolean;
-interface iValidator extends iValidator_ {
-  errors: any
-}
-type iErrorText = (errors: any) => string
-
-type iScope = {
+function validateBySchema(
+  patterns: string[],
+  $schema: string,
+  ignore: string | string[],
+  validate: iValidator,
+  errorsText: iErrorText,
   fileList: Set<string>
-  [k: string]: any
-}
-
-function validateBySchema(patterns: string[], $schema: string, ignore: string | string[], validate: iValidator, errorsText: iErrorText, fileList: Set<string>) {
+) {
   return patterns.every(pattern => {
     const paths = glob.sync(
       vs2globpattern(pattern),
@@ -116,7 +119,12 @@ function validateBySchema(patterns: string[], $schema: string, ignore: string | 
   })
 }
 
-function validateObject(path: string, validate: iValidator, {fileList, ...scope}: Partial<iScope> = {}, errorsText: iErrorText) {
+function validateObject(
+  path: string,
+  validate: iValidator,
+  {fileList, ...scope}: Partial<iScope> = {},
+  errorsText: iErrorText
+) {
   if (!validate(readJson(path)))
     throw [
       `#Schema.Error: ${errorsText(validate.errors)}`,
