@@ -11,7 +11,7 @@
   "scripts": {
     "test": "tsc --noEmit",
     "prebuild": "npm run test",
-    "build": "rm -rf docs/dist && tsc && chmod +x ./docs/dist/index.js && ./docs/dist/index.js",
+    "build": "rm -rf docs/dist && tsc && chmod +x ./docs/dist/index.js && ./docs/dist/index.js && echo 'done'",
     "dev:bad": "tsmon index.ts",
     "dev": "ts-node-dev --respawn --transpileOnly index.ts",
     "dev:check": "nodemon --watch './*.ts' -e ts --exec 'ts-node' index.ts"

@@ -1,17 +1,51 @@
-export type iVsCodeSettings = {
+export { iValidator, iScope, iVsCodeWorkSpace, iVsCodeSettings, iErrorText, iIdeaSettings } 
+
+type iVsCodeSettings = {
   'json.schemas': {fileMatch: string[], url: string}[]
 }
-export type iVsCodeWorkSpace = {
+type iVsCodeWorkSpace = {
   "settings": iVsCodeSettings
 }
 
-export type iValidator_ = (o: object) => boolean;
-export interface iValidator extends iValidator_ {
+type iValidator_ = (o: object) => boolean;
+interface iValidator extends iValidator_ {
   errors: any
 }
-export type iErrorText = (errors: any) => string
+type iErrorText = (errors: any) => string
 
-export type iScope = {
+type iScope = {
   fileList: Set<string>
   [k: string]: any
+}
+
+type iIdeaSettings = {
+  project: {
+    component: Array<{
+      state: Array<{
+        map: Array<{
+          entry: Array<{
+            value: Array<{
+              SchemaInfo: Array<{
+                option: Array<
+                  iIdeaLeaf & {
+                  list?: Array<{
+                    Item: Array<{
+                      option: iIdeaLeaf[]
+                    }>
+                  }>
+                }>
+              }>
+            }>
+          }>
+        }>        
+      }>
+    }>
+  }
+}
+
+type iIdeaLeaf = {
+  $: {
+    name: string,
+    value?: string
+  }
 }

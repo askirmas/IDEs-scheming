@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 import fs from 'fs'
 import glob from 'glob'
-import xml2js from 'xml2js'
+//import xml2js from 'xml2js'
 import defaultOptions from './config.json'
-import { iValidator, iScope, iVsCodeWorkSpace, iVsCodeSettings, iErrorText } from './defs.js'
+import { iValidator, iScope, iVsCodeWorkSpace, iVsCodeSettings, iErrorText/*, iIdeaSettings*/ } from './defs.js'
 
-const xmlParser = new xml2js.Parser()
+/*const xmlParser = new xml2js.Parser()
 xmlParser.parseString(
   fs.readFileSync('./.idea/jsonSchemas.xml'),
-  (err: any, res: any) => {       
+  (err: any, res?: iIdeaSettings) => {       
     console.log(JSON.stringify(
-      err || res.project.component[0].state[0].map[0].entry[0].value[0].SchemaInfo
+      err || res!.project.component[0].state[0].map[0].entry[0].value[0].SchemaInfo
     ))
   }
 )
-
+*/
 if (typeof require !== 'undefined' && require.main === module) {
   let result: any = true
   try {

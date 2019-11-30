@@ -37,12 +37,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var glob_1 = __importDefault(require("glob"));
-var xml2js_1 = __importDefault(require("xml2js"));
 var config_json_1 = __importDefault(require("./config.json"));
-var xmlParser = new xml2js_1.default.Parser();
-xmlParser.parseString(fs_1.default.readFileSync('./.idea/jsonSchemas.xml'), function (err, res) {
-    console.log(JSON.stringify(err || res.project.component[0].state[0].map[0].entry[0].value[0].SchemaInfo));
-});
 if (typeof require !== 'undefined' && require.main === module) {
     var result = true;
     try {
@@ -88,7 +83,8 @@ function main(options, ajv) {
                     return validateBySchema(fileMatch, url, ignore, ajv.compile(readJson(url)), function (e) { return ajv.errorsText(e); }, fileList);
                 });
         });
-    return result && (fileList.size === 0 || "These JSONs have no schema:\n" + __spread(fileList.values()).join("\n"));
+    return result && (fileList.size === 0
+        || "These JSONs have no schema:\n" + __spread(fileList.values()).join("\n"));
 }
 exports.default = main;
 function validateBySchema(patterns, $schema, ignore, validate, errorsText, fileList) {
