@@ -1,0 +1,25 @@
+{
+  "$id": "xml-1.schema.json",
+  "type": "object",
+  "$ref": "#/definitions/XmlNode",
+  "definitions": {
+    "XmlNode": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["number", "boolean", "string"]
+      },
+      "properties": {
+        "children": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "oneOf": [
+              {"$ref": "#/definitions/XmlNode"},
+              {"type": "string"}
+            ]
+          }
+        }
+      }
+    }
+  }
+}

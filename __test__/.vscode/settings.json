@@ -1,0 +1,22 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "**/*.xml.*json"
+      ],
+      "url": "./schemas/xml.schema.json"
+    },
+    {
+      "fileMatch": [
+        "**/*.xml-1.*json"
+      ],
+      "url": "./schemas/xml-1.schema.json"
+    },
+    {
+      "fileMatch": [
+        "**/*.xml-2.*json"
+      ],
+      "url": "./schemas/xml-2.schema.json"
+    }
+  ]
+}

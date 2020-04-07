@@ -1,0 +1,4 @@
+{
+  "$id": "xml.schema.json",
+  "$ref": "./xml-1.schema.json"
+}
