@@ -1,10 +1,17 @@
 #!/usr/bin/env node
 import fs from 'fs'
-import glob from 'glob'
+import globby from 'globby'
 //import xml2js from 'xml2js'
 import defaultOptions from './config.json'
-import { iValidator, iScope, iVsCodeWorkSpace, iVsCodeSettings, iErrorText/*, iIdeaSettings*/ } from './defs.js'
+import {
+  iValidator,
+  iScope,
+  iVsCodeWorkSpace,
+  iVsCodeSettings,
+  iErrorText/*, iIdeaSettings*/
+} from './defs'
 
+const gitignore = true
 /*const xmlParser = new xml2js.Parser()
 xmlParser.parseString(
   fs.readFileSync('./.idea/jsonSchemas.xml'),
@@ -40,9 +47,9 @@ export default function main(
 ) {
   const opts = Object.assign({}, defaultOptions, options || {})
   , {ignore, wsPattern, settingsPath, listPattern} = opts,
-  fileList = new Set(glob.sync(listPattern, {ignore}))
+  fileList = new Set(globby.sync(listPattern, {ignore, gitignore}))
 
-  let validateEntriesPacks = glob.sync(wsPattern)
+  let validateEntriesPacks = globby.sync(wsPattern, {gitignore})
   .map(wsPath =>
     fs.existsSync(wsPath)
     && (<iVsCodeWorkSpace>readJson(wsPath)).settings
@@ -68,16 +75,13 @@ export default function main(
     : validateEntries
     //@ts-ignore
     .every(({fileMatch, url}) => {
-      if (url.startsWith('http')) {
-        console.warn('Schemas by URL is not supported yet')
-        return true
-      }
-      
       return validateBySchema(
         fileMatch,
         url,
         ignore,
-        ajv.compile(readJson(url)),
+        url.startsWith('http') 
+        ? ajv.getSchema('url')
+        : ajv.compile(readJson(url)),
         e => ajv.errorsText(e),
         fileList
       )
@@ -96,15 +100,15 @@ export default function main(
 function validateBySchema(
   patterns: string[],
   $schema: string,
-  ignore: string | string[],
+  ignore: string[],
   validate: iValidator,
   errorsText: iErrorText,
   fileList: Set<string>
 ) {
   return patterns.every(pattern => {
-    const paths = glob.sync(
+    const paths = globby.sync(
       vs2globpattern(pattern),
-      { ignore }
+      { ignore, gitignore }
     )
     
     if (paths.length === 0)

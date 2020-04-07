@@ -36,8 +36,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
-var glob_1 = __importDefault(require("glob"));
+var globby_1 = __importDefault(require("globby"));
 var config_json_1 = __importDefault(require("./config.json"));
+var gitignore = true;
 if (typeof require !== 'undefined' && require.main === module) {
     var result = true;
     try {
@@ -56,8 +57,8 @@ if (typeof require !== 'undefined' && require.main === module) {
 function main(options, ajv) {
     if (options === void 0) { options = {}; }
     if (ajv === void 0) { ajv = (new (require(config_json_1.default.interpreter.ref))(config_json_1.default.interpreter.opts)); }
-    var opts = Object.assign({}, config_json_1.default, options || {}), ignore = opts.ignore, wsPattern = opts.wsPattern, settingsPath = opts.settingsPath, listPattern = opts.listPattern, fileList = new Set(glob_1.default.sync(listPattern, { ignore: ignore }));
-    var validateEntriesPacks = glob_1.default.sync(wsPattern)
+    var opts = Object.assign({}, config_json_1.default, options || {}), ignore = opts.ignore, wsPattern = opts.wsPattern, settingsPath = opts.settingsPath, listPattern = opts.listPattern, fileList = new Set(globby_1.default.sync(listPattern, { ignore: ignore, gitignore: gitignore }));
+    var validateEntriesPacks = globby_1.default.sync(wsPattern, { gitignore: gitignore })
         .map(function (wsPath) {
         return fs_1.default.existsSync(wsPath)
             && readJson(wsPath).settings;
@@ -89,7 +90,7 @@ function main(options, ajv) {
 exports.default = main;
 function validateBySchema(patterns, $schema, ignore, validate, errorsText, fileList) {
     return patterns.every(function (pattern) {
-        var paths = glob_1.default.sync(vs2globpattern(pattern), { ignore: ignore });
+        var paths = globby_1.default.sync(vs2globpattern(pattern), { ignore: ignore, gitignore: gitignore });
         if (paths.length === 0)
             throw "No files under " + pattern;
         return paths.every(function (path) { return validateObject(path, validate, { fileList: fileList, $schema: $schema, pattern: pattern, path: path }, errorsText); });

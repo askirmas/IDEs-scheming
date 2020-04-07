@@ -31,19 +31,16 @@
     "email": "kirmas@phystech.edu"
   },
   "dependencies": {
-    "ajv": "^6.10.2",
-    "glob": "^7.1.5",
-    "xml2js": "^0.4.22"
+    "ajv": "^6.12.0",
+    "globby": "^11.0.0"
   },
   "devDependencies": {
     "@types/ajv": "^1.0.0",
-    "@types/glob": "^7.1.1",
-    "@types/node": "^12.12.3",
-    "@types/xml2js": "^0.4.5",
-    "git-hooks-wrapper": "^0.4.2",
+    "@types/node": "^12.12.34",
+    "git-hooks-wrapper": "^0.4.6",
     "nodemon": "^1.19.4",
-    "ts-node-dev": "^1.0.0-pre.43",
-    "tsmon": "^0.5.1",
-    "typescript": "^3.6.4"
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tsmon": "^0.5.12",
+    "typescript": "^3.8.3"
   }
 }

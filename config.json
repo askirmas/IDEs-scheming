@@ -1,16 +1,16 @@
 {
-    "wsPattern": "*.code-workspace",
-    "settingsPath": ".vscode/settings.json",
-    "ignore$comment": "TODO: read .gitignore and etc stuff",
-    "listPattern": "**/*.json",
-    "ignore": [
-        "node_modules/**",
-        "*.json"
-    ],
-    "interpreter": {
-        "ref": "ajv",
-        "opts": {
-            "schemaId": "auto"
-        }
+  "wsPattern": "*.code-workspace",
+  "settingsPath": ".vscode/settings.json",
+  "listPattern": "**/*.json",
+  "ignore": [
+    "node_modules/**",
+    "*.json"
+  ],
+  "interpreter": {
+    "ref": "ajv",
+    "opts": {
+      "schemaId": "auto",
+      "extendRefs": true
     }
+  }
 }
