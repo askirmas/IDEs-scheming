@@ -1,32 +1,3 @@
 {
-  "json.format.enable": true,
-  "json.schemas": [
-    {
-      "fileMatch": [
-        "./schemas/*.json",
-        "docs/**/draft*.json"
-      ],
-      "url": "./schemas/draft07-strict.json"
-    },
-    {
-      "fileMatch": [
-        "./schemas/*.json",
-        "docs/**/draft*.json"
-      ],
-      "url": "./schemas/draft06-strict.json"
-    },
-    {
-      "fileMatch": [
-        "./schemas/*.json",
-        "docs/**/draft*.json"
-      ],
-      "url": "./schemas/draft04-strict.json"
-    },
-    {
-      "fileMatch": [
-        "config.json"
-      ],
-      "url": "./config.schema.json"
-    }
-  ]
+  "json.format.enable": true
 }

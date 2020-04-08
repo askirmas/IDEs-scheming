@@ -8,31 +8,16 @@
 		"json.schemas": [
 			{
 				"fileMatch": [
-					"./schemas/*.json",
-					"docs/**/draft*.json"
+					"*.schema.*json"
 				],
-				"url": "./schemas/draft07-strict.json"
+				"url": "http://json-schema.org/draft-07/schema#"
 			},
 			{
 				"fileMatch": [
-					"./schemas/*.json",
-					"docs/**/draft*.json"
-				],
-				"url": "./schemas/draft06-strict.json"
-			},
-			{
-				"fileMatch": [
-					"./schemas/*.json",
-					"docs/**/draft*.json"
-				],
-				"url": "./schemas/draft04-strict.json"
-			},
-			{
-				"fileMatch": [
-					"config.json"
+					"./config.json"
 				],
 				"url": "./config.schema.json"
-			}	
+			}
 		]
 	}
 }

@@ -1,3 +1,49 @@
 {
-  "$schema": "https://askirmas.github.io/IDEs-scheming/schemas/draft07-strict.json"
+  "$schema": "./schemas/draft-07.schema.json",
+  "title": "Config",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "patterns": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "json": {
+          "type": "string",
+          "format": "uri-reference",
+          "default": "*.json"
+        },
+        "settings": {
+          "type": "string",
+          "format": "uri-reference",
+          "default": ".vscode/settings.json"
+        },
+        "workSpace": {
+          "type": "string",
+          "format": "uri-reference",
+          "default": "*.code-workspace"
+        }
+      }
+    },
+    "ignore": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri-reference"
+      },
+      "default": [
+        "tsconfig.json",
+        "package.json",
+        "package-lock.json"
+      ]
+    },
+    "notEachJsonShouldHaveSchema": {
+      "type": "boolean",
+      "default": false
+    },
+    "withoutGitIgnore": {
+      "type": "boolean",
+      "default": false
+    }
+  }
 }

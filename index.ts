@@ -1,158 +1,181 @@
 #!/usr/bin/env node
-import fs from 'fs'
-import globby from 'globby'
-//import xml2js from 'xml2js'
-import defaultOptions from './config.json'
-import {
-  iValidator,
-  iScope,
-  iVsCodeWorkSpace,
-  iVsCodeSettings,
-  iErrorText/*, iIdeaSettings*/
-} from './defs'
+import globby, { GlobbyOptions } from 'globby'
+import {readFile} from 'fs'
+import {dirname, join, resolve} from 'path' 
+import Ajv, { Options } from 'ajv'
+import fetch from 'node-fetch'
 
-const gitignore = true
-/*const xmlParser = new xml2js.Parser()
-xmlParser.parseString(
-  fs.readFileSync('./.idea/jsonSchemas.xml'),
-  (err: any, res?: iIdeaSettings) => {       
-    console.log(JSON.stringify(
-      err || res!.project.component[0].state[0].map[0].entry[0].value[0].SchemaInfo
-    ))
-  }
-)
-*/
-if (typeof require !== 'undefined' && require.main === module) {
-  let result: any = true
-  try {
-    result = main()
-  } catch (e) {
-    result = e
-  } finally {
-    if (result === true)
-      process.exit(0);
-    console.error(`\x1b[31m${result}\x1b[m`)
-    process.exit(1)
-  }
-}
+import $default, {patterns} from './config.json'
+import { iVsCodeSchemaEntry, iVsCodeWorkSpace, iVsCodeSettings, with$id } from './defs'
 
-export default function main(
-  options = {},
-  ajv = (
-    new (require(defaultOptions.interpreter.ref))(defaultOptions.interpreter.opts)
-  )/* // AJV- Not required if this one first use as data and as schema only afterwards
-  .addMetaSchema(
-    require('./schemas/draft04-strict.json')
-  )*/
-) {
-  const opts = Object.assign({}, defaultOptions, options || {})
-  , {ignore, wsPattern, settingsPath, listPattern} = opts,
-  fileList = new Set(globby.sync(listPattern, {ignore, gitignore}))
-
-  let validateEntriesPacks = globby.sync(wsPattern, {gitignore})
-  .map(wsPath =>
-    fs.existsSync(wsPath)
-    && (<iVsCodeWorkSpace>readJson(wsPath)).settings
-  )
-  
-  validateEntriesPacks.push(
-    fs.existsSync(settingsPath)
-    && <iVsCodeSettings>readJson(settingsPath)
-  )
-
-  validateEntriesPacks = validateEntriesPacks
-  .filter(x => x && typeof x === 'object' && x['json.schemas'])
-  
-  const result = validateEntriesPacks.length === 0 
-  ? 'No IDE settings was found'
-  : (
-    <iVsCodeSettings[]>
-    validateEntriesPacks
-    .filter(x => x && typeof x === 'object' && x['json.schemas'])
-  ).every(({"json.schemas": validateEntries}) => {
-    return validateEntries.length === 0
-    ? "Nothing to validate"
-    : validateEntries
-    //@ts-ignore
-    .every(({fileMatch, url}) => {
-      return validateBySchema(
-        fileMatch,
-        url,
-        ignore,
-        url.startsWith('http') 
-        ? ajv.getSchema('url')
-        : ajv.compile(readJson(url)),
-        e => ajv.errorsText(e),
-        fileList
-      )
-    })
-  })
-  
-  return result && (
-    fileList.size === 0
-    || `These JSONs have no schema:\n${
-      [...fileList.values()].join("\n")
-    }`
-  )
-}
-
-
-function validateBySchema(
-  patterns: string[],
-  $schema: string,
-  ignore: string[],
-  validate: iValidator,
-  errorsText: iErrorText,
-  fileList: Set<string>
-) {
-  return patterns.every(pattern => {
-    const paths = globby.sync(
-      vs2globpattern(pattern),
-      { ignore, gitignore }
-    )
+const ajvOpts: Options = {
+  "schemaId": "auto",
+  "extendRefs": true,
+  "jsonPointers": true,
+  "allErrors": true,
+  "verbose": true,
+  "loadSchema": async uri =>  {
+    //TODO move to readJson
+    if (uri.startsWith('http'))
+      return fetch(uri).then(r => r.json())
     
-    if (paths.length === 0)
-      throw `No files under ${pattern}`
+    const schema = await readJson("loadSchema", uri) as with$id
+    , {$id} = schema
 
-    return paths.every(path => validateObject(
-      path,
-      validate,
-      { fileList, $schema, pattern, path },
-      errorsText
-    ))
+    schema.$id = $id && $id.startsWith('.') ? $id : uri
+    return schema
+  }
+}
+, globOpts: GlobbyOptions = {
+  gitignore: !$default.withoutGitIgnore,
+  ignore: $default.ignore,
+  dot: true,
+  suppressErrors: true,
+  absolute: true
+} 
+, ajv = new Ajv(ajvOpts)
+, g = (pattern: Parameters<typeof globby>[0], cwd?: string) => globby(
+  pattern, {
+    cwd,
+    ...globOpts
   })
+
+export default checker
+export {
+  checker
 }
 
-function validateObject(
-  path: string,
-  validate: iValidator,
-  {fileList, ...scope}: Partial<iScope> = {},
-  errorsText: iErrorText
-) {
-  if (!validate(readJson(path)))
-    throw [
-      `#Schema.Error: ${errorsText(validate.errors)}`,
-      ...Object.entries(scope)
-      .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
-    ].join("\n")
+if (module.parent === null)
+  checker()
+  .then(r => {
+    if (r === true)
+      process.exit(0)
 
-  fileList && fileList.delete(path.replace(/^\.\//, ''))
+    console.error(r)
+    process.exit(1)
+  })
+  .catch(e => {
+    console.error(e)
+    process.exit(1)
+  })
+
+
+
+async function checker() {
+  const jsons2Check = new Set(
+    $default.notEachJsonShouldHaveSchema
+    ? []
+    : await g(patterns.json)
+  )
+  , tasks: Map<string, [string, iVsCodeSchemaEntry[]]> = new Map(await Promise.all([
+      ...(await g(patterns.workSpace))
+      .map(async filename => [
+        filename,
+        [
+          dirname(filename),
+          (await readJson(patterns.workSpace, filename) as iVsCodeWorkSpace)
+          //TODO .folders
+          .settings['json.schemas']  
+        ]
+      ] as [string, [string, iVsCodeSchemaEntry[]]]),
+      ...(await g(patterns.settings))
+      .map(async filename => [
+        filename, 
+        [
+          join(dirname(filename), '..'),
+          (await readJson(patterns.settings, filename) as iVsCodeSettings)
+          ["json.schemas"]
+        ]
+      ] as [string, [string, iVsCodeSchemaEntry[]]])
+  ]))
+
+  for (const [source, [subfolder, entries]] of tasks) {
+    if (!entries)
+      continue
+
+    let index = -1
+    for (const {fileMatch, schema, url} of entries) {      
+      index++
+      const scope = {source, index} 
+      if (url === undefined && schema === undefined)
+        throw {...scope, message: "Both `url` and `schema` are empty"}
+      
+      const $id = url === undefined 
+      ? `${source}:${index}`
+      : url.startsWith('http')
+      ? url 
+      : resolve(subfolder, url)
+      
+      Object.assign(scope, {$schema: $id})
+
+      if (ajv.getSchema($id) === undefined) {
+        await ajv.compileAsync(
+          {
+            ...schema ?? await readJson('compile', $id),
+            $id
+          }
+        )
+        throwIfError(ajv, scope)
+      }
+
+      if (!(fileMatch && fileMatch.length))
+        throw {...scope, message: "Empty `fileMatch`"}
+
+      for (const filePattern of fileMatch) {
+        const files = await g(filePattern, subfolder)
+        if (!files.length)
+          throw {...scope, filePattern, message: "No files was found"}
+  
+        for (const filename of files) {
+          jsons2Check.delete(filename)
+          const data = await readJson('validate', filename) as any
+          if (data !== null && typeof data === 'object')
+            // TODO and this schema
+            delete data.$schema
+          if (!ajv.validate($id!, data))
+            throwIfError(ajv, {...scope,  filename})
+        }  
+      }
+    }
+  }
+
+  //TODO try get schema
+  if (jsons2Check.size)
+    throw {
+      "message": "Not all jsons checked with",
+      "data": jsons2Check
+    }
   return true
 }
 
-function readJson(path: string) :object {
-  try {
-    return JSON.parse(
-      //@ts-ignore Argument of type 'Buffer' is not assignable to parameter of type 'string'.ts(2345)
-      fs.readFileSync(path)
-    )
-  } catch (e) {
-    throw `${path}:\n${e}`
-  }
-}
+function readJson(calledBy: string, filename: string) {
+  return new Promise((res, rej) => 
+    readFile(filename, (error, body) => {
+      try {
+        if (error)
+          throw error
+        res(
+          //TODO jsonC
+          JSON.parse(
+            body.toString()
+            .replace(
+              /"(\$ref|\$schema)"\s*:\s*"(\.[^"]+)"/gs,
+              (substring, $k, path?: string) =>
+              !path
+              ? substring
+              :`"${$k}":"${resolve(dirname(filename), path)}"`
+            )             
+          )
+        )
+      }
+      catch (error) {
+        return rej({calledBy, filename, error})
+      }
+    })
+  )
+} 
 
-function vs2globpattern(pattern: string) {
-  return pattern.includes('/')
-  ? pattern
-  : `**/${pattern}` 
+function throwIfError({errors}: {errors?: any}, scope: any) {
+  if (errors)
+    throw {...scope, error: ajv.errorsText(errors, {}), errors}
 }

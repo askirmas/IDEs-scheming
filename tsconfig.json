@@ -13,11 +13,12 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "esModuleInterop": true,
-    "preserveSymlinks": true,
+    "preserveSymlinks": true
   },
   "files": [
     "./config.json",
     "./defs.ts",
-    "./index.ts"
+    "./index.ts",
+    "./next.ts"
   ]
 }

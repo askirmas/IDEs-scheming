@@ -1,16 +1,15 @@
 {
-  "wsPattern": "*.code-workspace",
-  "settingsPath": ".vscode/settings.json",
-  "listPattern": "**/*.json",
+  "patterns": {
+    "json": "*.json",
+    "settings": ".vscode/settings.json",
+    "workSpace": "*.code-workspace"
+  },
   "ignore": [
-    "node_modules/**",
-    "*.json"
+    "tsconfig.json",
+    "package.json",
+    "package-lock.json"
   ],
-  "interpreter": {
-    "ref": "ajv",
-    "opts": {
-      "schemaId": "auto",
-      "extendRefs": true
-    }
-  }
+  "notEachJsonShouldHaveSchema": false,
+  "withoutGitIgnore": false,
+  "$schema": "./config.schema.json"
 }
