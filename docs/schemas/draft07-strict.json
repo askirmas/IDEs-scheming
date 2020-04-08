@@ -132,7 +132,10 @@
             "$ref": "#/definitions/stringArray"
         },
         "additionalProperties": {
-            "$ref": "#"
+            "oneOf": [
+                {"$ref": "#"},
+                {"type": "boolean"}
+            ]
         },
         "definitions": {
             "type": "object",
