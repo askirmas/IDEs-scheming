@@ -1,8 +1,10 @@
 {
   "patterns": {
     "units": "*.json",
-    "settings": ".vscode/settings.json",
-    "workSpace": "*.code-workspace"
+    "vscode": {
+      "settings": ".vscode/settings.json",
+      "workspace": "*.code-workspace"  
+    }
   },
   "notEachJsonShouldHaveSchema": false,
   "ajv": {
@@ -10,7 +12,8 @@
     "extendRefs": true,
     "jsonPointers": true,
     "allErrors": true,
-    "verbose": true  
+    "verbose": true,
+    "ownProperties": true
   },
   "globby": {
     "gitignore": true,

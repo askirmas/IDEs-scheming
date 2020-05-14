@@ -1,4 +1,11 @@
-export { iVsCodeWorkSpace, iVsCodeSettings, iVsCodeSchemaEntry, with$id } 
+export { iVsCodeWorkSpace, iVsCodeSettings, iVsCodeSchemaEntry, with$id, iTask } 
+
+type iTask
+= {
+  source: string
+  index: number
+}
+& iVsCodeSchemaEntry
 
 type iVsCodeSchemaEntry = Partial<{
   "fileMatch": string[]
@@ -6,13 +13,15 @@ type iVsCodeSchemaEntry = Partial<{
   "schema": any
 }>
 
-type iVsCodeSettings = {
+type iVsCodeSettings = Partial<{
   "json.schemas": iVsCodeSchemaEntry[]
-}
-type iVsCodeWorkSpace = {
+}>
+
+type iVsCodeWorkSpace = Partial<{
   "folders": {
     "path": string
   }[]
   "settings": iVsCodeSettings
-}
+}>
+
 type with$id = {$id?: string}

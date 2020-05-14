@@ -1,0 +1,33 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/iTask"
+  },
+  "definitions": {
+    "iTask": {
+      "type": "object",
+      "required": ["source", "index"],
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "index": {
+          "type": "number"
+        },
+        "fileMatch": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "url": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "schema": true
+      }
+    }
+  }
+}

@@ -1,11 +1,10 @@
 #!/usr/bin/env node
-import {dirname, join, resolve} from 'path' 
-
+import { dirname, join, resolve } from 'path' 
 import { ajv } from './ajv'
 import { g } from './g'
-import {patterns, notEachJsonShouldHaveSchema} from './scheming.config.json'
-import { iVsCodeSchemaEntry, iVsCodeWorkSpace, iVsCodeSettings } from './defs'
 import { readJson } from './readJson'
+import { patterns, notEachJsonShouldHaveSchema } from './scheming.config.json'
+import { iVsCodeSchemaEntry, iVsCodeWorkSpace, iVsCodeSettings } from './defs'
 
 export default checker
 export {
@@ -27,28 +26,29 @@ if (module.parent === null)
   })
 
 async function checker() {
+  //TODO Unused schemas
   const jsons2Check = new Set(
     notEachJsonShouldHaveSchema
     ? []
     : await g(patterns.units)
   )
   , tasks: Map<string, [string, iVsCodeSchemaEntry[]]> = new Map(await Promise.all([
-      ...(await g(patterns.workSpace))
+      ...(await g(patterns.vscode.workspace))
       .map(async filename => [
         filename,
         [
           dirname(filename),
-          (await readJson(patterns.workSpace, filename) as iVsCodeWorkSpace)
+          (await readJson(patterns.vscode.workspace, filename) as iVsCodeWorkSpace)
           //TODO .folders
-          .settings['json.schemas']  
+          .settings?.['json.schemas']  
         ]
       ] as [string, [string, iVsCodeSchemaEntry[]]]),
-      ...(await g(patterns.settings))
+      ...(await g(patterns.vscode.settings))
       .map(async filename => [
         filename, 
         [
           join(dirname(filename), '..'),
-          (await readJson(patterns.settings, filename) as iVsCodeSettings)
+          (await readJson(patterns.vscode.settings, filename) as iVsCodeSettings)
           ["json.schemas"]
         ]
       ] as [string, [string, iVsCodeSchemaEntry[]]])
@@ -87,7 +87,7 @@ async function checker() {
         throw {...scope, message: "Empty `fileMatch`"}
 
       for (const filePattern of fileMatch) {
-        const files = await g(filePattern, subfolder)
+        const files = await g(filePattern, {cwd: subfolder})
         if (!files.length)
           throw {...scope, filePattern, message: "No files was found"}
   

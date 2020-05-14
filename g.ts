@@ -5,12 +5,12 @@ export {
   g
 }
 
-function g(pattern: Parameters<typeof globby>[0], cwd?: string) {
+function g(patterns: Parameters<typeof globby>[0], opts?: Parameters<typeof globby>[1]) {
   return globby(
-    pattern,
+    patterns,
     {
-      ...globbyOpts,
-      cwd
-    } as GlobbyOptions
+      ...globbyOpts as GlobbyOptions,
+      ...opts
+    } 
   )
 }

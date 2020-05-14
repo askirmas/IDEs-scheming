@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
+    "lib": [
+      "ESNext"
+    ],
     "resolveJsonModule": true,
     "target": "es5",
     "module": "commonjs",
     "declaration": true,
     "outDir": "./docs/dist",
     "rootDir": "./",
-    "removeComments": true,
+    "removeComments": false,
     "downlevelIteration": true,
     "strict": true,
     "noUnusedLocals": true,
@@ -14,11 +17,5 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "preserveSymlinks": true
-  },
-  "files": [
-    "./config.json",
-    "./defs.ts",
-    "./index.ts",
-    "./next.ts"
-  ]
+  }
 }

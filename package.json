@@ -9,7 +9,7 @@
     "./dist"
   ],
   "scripts": {
-    "test": "tsc --noEmit",
+    "test": "jest && tsc --noEmit",
     "prebuild": "npm run test",
     "build": "rm -rf docs/dist && tsc && chmod +x ./docs/dist/index.js && ./docs/dist/index.js && echo 'done'"
   },

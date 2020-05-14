@@ -13,15 +13,20 @@
           "format": "uri-reference",
           "default": "*.json"
         },
-        "settings": {
-          "type": "string",
-          "format": "uri-reference",
-          "default": ".vscode/settings.json"
-        },
-        "workSpace": {
-          "type": "string",
-          "format": "uri-reference",
-          "default": "*.code-workspace"
+        "vscode": {
+          "type": "object",
+          "properties": {
+            "settings": {
+              "type": "string",
+              "format": "uri-reference",
+              "default": ".vscode/settings.json"
+            },
+            "workSpace": {
+              "type": "string",
+              "format": "uri-reference",
+              "default": "*.code-workspace"
+            }            
+          }
         }
       }
     },
