@@ -104,7 +104,7 @@ async function checker() {
     }
   }
 
-  //TODO try get internal `schema`
+  //TODO try get internal `$schema`
   if (jsons2Check.size)
     throw {
       "message": "Not all jsons checked with",

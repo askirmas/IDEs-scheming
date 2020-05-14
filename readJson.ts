@@ -6,13 +6,15 @@ export {
 }
 
 function readJson(calledBy: string, filename: string) {
+  //TODO async function
   return new Promise((res, rej) => 
+    //TODO Change with `require()`
     readFile(filename, (error, body) => {
       try {
         if (error)
           throw error
         res(
-          //TODO jsonC
+          //TODO jsonC?
           JSON.parse(
             body.toString()
             .replace(

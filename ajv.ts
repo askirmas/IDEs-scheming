@@ -8,13 +8,15 @@ const ajv = new Ajv({...ajvOpts as Options, loadSchema})
 export { ajv }
 
 async function loadSchema(uri: string)  {
-  //TODO move to readJson
+  //TODO move to readJson?
   if (uri.startsWith('http'))
     return fetch(uri).then(r => r.json())
   
   const schema = await readJson("loadSchema", uri) as with$id
-  , {$id} = schema
+  , {$id = ''} = schema
+  
+  if (typeof $id !== 'string' || !$id.startsWith('.'))
+    schema.$id = uri
 
-  schema.$id = $id && $id.startsWith('.') ? $id : uri
   return schema
 }
