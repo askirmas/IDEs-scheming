@@ -1,0 +1,50 @@
+{
+  "title": "Scheming Config",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "patterns": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "vscode": {
+          "type": "object",
+          "properties": {
+            "settings": {
+              "type": "string",
+              "format": "uri-reference",
+              "default": ".vscode/settings.json"
+            },
+            "workSpace": {
+              "type": "string",
+              "format": "uri-reference",
+              "default": "*.code-workspace"
+            }            
+          }
+        }
+      }
+    },
+    "ajv": {
+      "title": "Read more: https://github.com/ajv-validator/ajv#options",
+      "type": "object"
+    },
+    "globby": {
+      "title": "Read more: https://github.com/sindresorhus/globby#options",
+      "type": "object",
+      "properties": {
+        "ignore": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri-reference"
+          },
+          "default": [
+            "tsconfig.json",
+            "package.json",
+            "package-lock.json"
+          ]
+        }  
+      }
+    }
+  }
+}

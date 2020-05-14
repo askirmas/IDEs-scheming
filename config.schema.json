@@ -1,60 +1,28 @@
 {
   "title": "Scheming Config",
   "type": "object",
-  "$comment": "//TODO Add `gitmodules: boolean`",
-  "additionalProperties": false,
   "properties": {
-    "patterns": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "units": {
-          "type": "string",
-          "format": "uri-reference",
-          "default": "*.json"
-        },
-        "vscode": {
-          "type": "object",
-          "properties": {
-            "settings": {
-              "type": "string",
-              "format": "uri-reference",
-              "default": ".vscode/settings.json"
-            },
-            "workSpace": {
-              "type": "string",
-              "format": "uri-reference",
-              "default": "*.code-workspace"
-            }            
-          }
-        }
-      }
+    "units": {
+      "$comment": "type: array",
+      "type": "string",
+      "format": "uri-reference",
+      "default": "*.json"
     },
-    "notEachJsonShouldHaveSchema": {
+    "notEachUnitShouldHaveSchema": {
       "type": "boolean",
       "default": false
     },
-    "ajv": {
-      "title": "Read more: https://github.com/ajv-validator/ajv#options",
-      "type": "object"
+    "gitmodules": {
+      "const": null,
+      "title": "TBD",
+      "type": "boolean",
+      "default": false
     },
-    "globby": {
-      "title": "Read more: https://github.com/sindresorhus/globby#options",
-      "type": "object",
-      "properties": {
-        "ignore": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "uri-reference"
-          },
-          "default": [
-            "tsconfig.json",
-            "package.json",
-            "package-lock.json"
-          ]
-        }  
-      }
+    "wsfolders": {
+      "const": null,
+      "title": "TBD",
+      "type": "boolean",
+      "default": false
     }
   }
 }

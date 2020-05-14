@@ -4,7 +4,7 @@ import schema from './itasks.schema.json'
 
 const specDataDir = '__specs__'
 , suites = [
-  [undefined, 3],
+  [undefined, 4],
   [`${specDataDir}/true`, 4],
   [`${specDataDir}/at_settings`, 3],
   [`${specDataDir}/at_settings2`, 3],

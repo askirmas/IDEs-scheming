@@ -1,7 +1,7 @@
 import Ajv, { Options } from 'ajv'
 import fetch from 'node-fetch'
 import { readJson } from './readJson'
-import { ajv as ajvOpts } from './scheming.config.json'
+import { ajv as ajvOpts } from './parameters.json'
 import { with$id } from './defs'
 
 const ajv = new Ajv({...ajvOpts as Options, loadSchema})

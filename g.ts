@@ -1,5 +1,5 @@
 import globby, { GlobbyOptions } from 'globby'
-import {globby as globbyOpts} from './scheming.config.json'
+import {globby as globbyOpts} from './parameters.json'
 
 export {
   g

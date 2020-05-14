@@ -1,5 +1,5 @@
 import { g } from "./g"
-import { patterns } from './scheming.config.json'
+import { patterns } from './parameters.json'
 import { readJson } from "./readJson"
 import { iVsCodeWorkSpace, iVsCodeSettings, iTask } from "./defs"
 import { dirname, basename } from "path"
@@ -30,7 +30,7 @@ async function vscodeTasks(cwd?: string) {
     wsFiles
     .map((source, index) =>
       (readJson(vscodeTasks.name, source) as Promise<iVsCodeWorkSpace>)
-      //TODO *.code-workspace:`.folder[@].path`
+      //TODO *.code-workspace:`.folder[@].path`.forEach(cwdNext => vscodeTasks(`${cwd}/${cwdNext}`))
       .then(({settings}) => settings && [
         settings,
         dirname(source),

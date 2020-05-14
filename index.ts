@@ -3,7 +3,8 @@ import { dirname, join, resolve } from 'path'
 import { ajv } from './ajv'
 import { g } from './g'
 import { readJson } from './readJson'
-import { patterns, notEachJsonShouldHaveSchema } from './scheming.config.json'
+import { units, notEachUnitShouldHaveSchema } from './scheming.config.json'
+import { patterns } from "./parameters.json"
 import { iVsCodeSchemaEntry, iVsCodeWorkSpace, iVsCodeSettings } from './defs'
 
 export default checker
@@ -28,9 +29,9 @@ if (module.parent === null)
 async function checker() {
   //TODO Unused schemas
   const jsons2Check = new Set(
-    notEachJsonShouldHaveSchema
+    notEachUnitShouldHaveSchema
     ? []
-    : await g(patterns.units)
+    : await g(units)
   )
   , tasks: Map<string, [string, iVsCodeSchemaEntry[]]> = new Map(await Promise.all([
       ...(await g(patterns.vscode.workspace))
