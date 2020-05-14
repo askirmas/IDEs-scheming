@@ -1,44 +1,11 @@
 #!/usr/bin/env node
-import globby, { GlobbyOptions } from 'globby'
-import {readFile} from 'fs'
 import {dirname, join, resolve} from 'path' 
-import Ajv, { Options } from 'ajv'
-import fetch from 'node-fetch'
 
-import $default, {patterns} from './config.json'
-import { iVsCodeSchemaEntry, iVsCodeWorkSpace, iVsCodeSettings, with$id } from './defs'
-
-const ajvOpts: Options = {
-  "schemaId": "auto",
-  "extendRefs": true,
-  "jsonPointers": true,
-  "allErrors": true,
-  "verbose": true,
-  "loadSchema": async uri =>  {
-    //TODO move to readJson
-    if (uri.startsWith('http'))
-      return fetch(uri).then(r => r.json())
-    
-    const schema = await readJson("loadSchema", uri) as with$id
-    , {$id} = schema
-
-    schema.$id = $id && $id.startsWith('.') ? $id : uri
-    return schema
-  }
-}
-, globOpts: GlobbyOptions = {
-  gitignore: !$default.withoutGitIgnore,
-  ignore: $default.ignore,
-  dot: true,
-  suppressErrors: true,
-  absolute: true
-} 
-, ajv = new Ajv(ajvOpts)
-, g = (pattern: Parameters<typeof globby>[0], cwd?: string) => globby(
-  pattern, {
-    cwd,
-    ...globOpts
-  })
+import { ajv } from './ajv'
+import { g } from './g'
+import {patterns, notEachJsonShouldHaveSchema} from './scheming.config.json'
+import { iVsCodeSchemaEntry, iVsCodeWorkSpace, iVsCodeSettings } from './defs'
+import { readJson } from './readJson'
 
 export default checker
 export {
@@ -59,13 +26,11 @@ if (module.parent === null)
     process.exit(1)
   })
 
-
-
 async function checker() {
   const jsons2Check = new Set(
-    $default.notEachJsonShouldHaveSchema
+    notEachJsonShouldHaveSchema
     ? []
-    : await g(patterns.json)
+    : await g(patterns.units)
   )
   , tasks: Map<string, [string, iVsCodeSchemaEntry[]]> = new Map(await Promise.all([
       ...(await g(patterns.workSpace))
@@ -139,7 +104,7 @@ async function checker() {
     }
   }
 
-  //TODO try get schema
+  //TODO try get internal `schema`
   if (jsons2Check.size)
     throw {
       "message": "Not all jsons checked with",
@@ -148,32 +113,6 @@ async function checker() {
   return true
 }
 
-function readJson(calledBy: string, filename: string) {
-  return new Promise((res, rej) => 
-    readFile(filename, (error, body) => {
-      try {
-        if (error)
-          throw error
-        res(
-          //TODO jsonC
-          JSON.parse(
-            body.toString()
-            .replace(
-              /"(\$ref|\$schema)"\s*:\s*"(\.[^"]+)"/gs,
-              (substring, $k, path?: string) =>
-              !path
-              ? substring
-              :`"${$k}":"${resolve(dirname(filename), path)}"`
-            )             
-          )
-        )
-      }
-      catch (error) {
-        return rej({calledBy, filename, error})
-      }
-    })
-  )
-} 
 
 function throwIfError({errors}: {errors?: any}, scope: any) {
   if (errors)

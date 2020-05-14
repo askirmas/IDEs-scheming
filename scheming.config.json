@@ -1,0 +1,26 @@
+{
+  "patterns": {
+    "units": "*.json",
+    "settings": ".vscode/settings.json",
+    "workSpace": "*.code-workspace"
+  },
+  "notEachJsonShouldHaveSchema": false,
+  "ajv": {
+    "schemaId": "auto",
+    "extendRefs": true,
+    "jsonPointers": true,
+    "allErrors": true,
+    "verbose": true  
+  },
+  "globby": {
+    "gitignore": true,
+    "ignore": [
+      "tsconfig.json",
+      "package.json",
+      "package-lock.json"
+    ],  
+    "dot": true,
+    "suppressErrors": true,
+    "absolute": true  
+  }
+}

@@ -1,5 +1,4 @@
 {
-  "$schema": "./schemas/draft-07.schema.json",
   "title": "Config",
   "type": "object",
   "additionalProperties": false,
@@ -8,7 +7,7 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "json": {
+        "units": {
           "type": "string",
           "format": "uri-reference",
           "default": "*.json"
@@ -25,25 +24,31 @@
         }
       }
     },
-    "ignore": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "format": "uri-reference"
-      },
-      "default": [
-        "tsconfig.json",
-        "package.json",
-        "package-lock.json"
-      ]
-    },
     "notEachJsonShouldHaveSchema": {
       "type": "boolean",
       "default": false
     },
-    "withoutGitIgnore": {
-      "type": "boolean",
-      "default": false
+    "ajv": {
+      "title": "Read more: https://github.com/ajv-validator/ajv#options",
+      "type": "object"
+    },
+    "globby": {
+      "title": "Read more: https://github.com/sindresorhus/globby#options",
+      "type": "object",
+      "properties": {
+        "ignore": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri-reference"
+          },
+          "default": [
+            "tsconfig.json",
+            "package.json",
+            "package-lock.json"
+          ]
+        }  
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "ides-scheming",
+  "name": "scheming",
   "version": "0.1.0",
   "description": "",
   "main": "./docs/dist/index.js",
@@ -18,13 +18,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:askirmas/IDEs-scheming.git"
+    "url": "git+ssh://git@github.com:askirmas/scheming.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/askirmas/IDEs-scheming/issues"
+    "url": "https://github.com/askirmas/scheming/issues"
   },
-  "homepage": "https://github.com/askirmas/IDEs-scheming#readme",
+  "homepage": "https://github.com/askirmas/scheming#readme",
   "author": {
     "name": "Andrii Kirmas",
     "url": "https://about.me/kirmas",
