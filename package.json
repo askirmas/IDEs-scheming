@@ -11,10 +11,7 @@
   "scripts": {
     "test": "tsc --noEmit",
     "prebuild": "npm run test",
-    "build": "rm -rf docs/dist && tsc && chmod +x ./docs/dist/index.js && ./docs/dist/index.js && echo 'done'",
-    "dev:bad": "tsmon index.ts",
-    "dev": "ts-node-dev --respawn --transpileOnly index.ts",
-    "dev:check": "nodemon --watch './*.ts' -e ts --exec 'ts-node' index.ts"
+    "build": "rm -rf docs/dist && tsc && chmod +x ./docs/dist/index.js && ./docs/dist/index.js && echo 'done'"
   },
   "repository": {
     "type": "git",
@@ -31,18 +28,18 @@
     "email": "kirmas@phystech.edu"
   },
   "dependencies": {
-    "ajv": "^6.12.0",
-    "globby": "^11.0.0"
+    "ajv": "^6.12.2",
+    "globby": "^11.0.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@types/ajv": "^1.0.0",
-    "@types/node": "^12.12.34",
+    "@types/jest": "^25.2.2",
+    "@types/node": "^12.12.39",
     "@types/node-fetch": "^2.5.7",
     "git-hooks-wrapper": "^0.4.6",
-    "node-fetch": "^2.6.0",
-    "nodemon": "^1.19.4",
-    "ts-node-dev": "^1.0.0-pre.44",
-    "tsmon": "^0.5.12",
-    "typescript": "^3.8.3"
+    "jest": "^26.0.1",
+    "ts-jest": "^25.5.1",
+    "typescript": "^3.9.2"
   }
 }
