@@ -6,10 +6,18 @@
   "definitions": {
     "iTask": {
       "type": "object",
-      "required": ["source", "index"],
+      "required": ["cwd", "source", "index"],
       "additionalProperties": false,
       "properties": {
         "source": {
+          "type": "string",
+          "format": "uri-reference",
+          "oneOf": [
+            {"const": ".vscode/settings.json"},
+            {"pattern": "\\.code-workspace$"}
+          ]
+        },
+        "cwd": {
           "type": "string",
           "format": "uri-reference"
         },

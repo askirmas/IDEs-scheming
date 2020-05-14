@@ -3,6 +3,7 @@ export { iVsCodeWorkSpace, iVsCodeSettings, iVsCodeSchemaEntry, with$id, iTask }
 type iTask
 = {
   source: string
+  cwd: string
   index: number
 }
 & iVsCodeSchemaEntry

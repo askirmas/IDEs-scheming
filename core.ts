@@ -2,6 +2,7 @@ import { g } from "./g"
 import { patterns } from './scheming.config.json'
 import { readJson } from "./readJson"
 import { iVsCodeWorkSpace, iVsCodeSettings, iTask } from "./defs"
+import { dirname, basename } from "path"
 
 const {
   vscode: {
@@ -30,20 +31,30 @@ async function vscodeTasks(cwd?: string) {
     .map((source, index) =>
       (readJson(vscodeTasks.name, source) as Promise<iVsCodeWorkSpace>)
       //TODO *.code-workspace:`.folder[@].path`
-      .then(({settings}) => settings && [settings, source, index] as const)
+      .then(({settings}) => settings && [
+        settings,
+        dirname(source),
+        basename(source),
+        index
+      ] as const)
     ).concat(
       setFiles
       .map((source, index) =>
         (readJson(vscodeTasks.name, source) as Promise<iVsCodeSettings>)
-        .then(settings => settings && [settings, source, index] as const)
+        .then(settings => settings && [
+          settings,
+          dirname(dirname(source)),
+          '.vscode/settings.json',
+          index
+        ] as const)
       )
     )
   )).forEach(set => {
     if (!set)
       return;
-    const [settings, source, index] = set
+    const [settings, cwd, source, index] = set
     , records = settings["json.schemas"] as undefined | typeof tasks
-    , meta = {source, index}
+    , meta = {source, index, cwd}
     if (!records)
       return
     records.forEach(record => Object.assign(record, meta))
