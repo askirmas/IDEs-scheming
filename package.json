@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "test": "jest && tsc --noEmit",
+    "postinstall": "git-hooks-wrapper init && git config include.path ../.gitconfig",
     "prebuild": "npm run test",
     "build": "rm -rf docs/dist && tsc && chmod +x ./docs/dist/index.js && ./docs/dist/index.js && echo 'done'"
   },
