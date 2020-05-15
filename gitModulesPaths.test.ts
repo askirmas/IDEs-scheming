@@ -5,14 +5,14 @@ it('empty', () => expect(gitModulesPaths(`
 ]))
 
 it('1 path', () => expect(gitModulesPaths(
-  'path = patterning'
+  'path=patterning'
 )).toStrictEqual([
   'patterning'
 ]))
 
-it('.gitmodule', () => expect(gitModulesPaths(`
+it('.gitmodules', () => expect(gitModulesPaths(`
 [submodule "patterning"]\n
-	path = patterning\n
+	path = patterning  \n
   url = https://github.com/askirmas/patterning.git\n
 [submodule "azure/syncer/azure-resource-manager-schemas"]\n
 	path = azure/syncer/azure-resource-manager-schemas\n
