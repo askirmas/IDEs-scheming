@@ -33,6 +33,7 @@ async function checker() {
     ? []
     : await g(units)
   )
+  //vscodeTasks()
   , tasks: Map<string, [string, iVsCodeSchemaEntry[]]> = new Map(await Promise.all([
       ...(await g(patterns.vscode.workspace))
       .map(async filename => [
@@ -65,24 +66,11 @@ async function checker() {
       const scope = {source, index} 
       if (url === undefined && schema === undefined)
         throw {...scope, message: "Both `url` and `schema` are empty"}
-      
-      const $id = url === undefined 
-      ? `${source}:${index}`
-      : url.startsWith('http')
-      ? url 
-      : resolve(subfolder, url)
-      
-      Object.assign(scope, {$schema: $id})
 
-      if (ajv.getSchema($id) === undefined) {
-        await ajv.compileAsync(
-          {
-            ...schema ?? await readJson('compile', $id),
-            $id
-          }
-        )
-        throwIfError(ajv, scope)
-      }
+      const $id = await registerSchema(url, source, index, subfolder, schema)
+      throwIfError(ajv, scope)
+
+      Object.assign(scope, {$schema: $id})
 
       if (!(fileMatch && fileMatch.length))
         throw {...scope, message: "Empty `fileMatch`"}
@@ -94,12 +82,9 @@ async function checker() {
   
         for (const filename of files) {
           jsons2Check.delete(filename)
-          const data = await readJson('validate', filename) as any
-          if (data !== null && typeof data === 'object')
-            // TODO and this schema
-            delete data.$schema
-          if (!ajv.validate($id!, data))
-            throwIfError(ajv, {...scope,  filename})
+          
+          if (!validate(await readJson('fileValidation', filename) as any, $id))
+            throwIfError(ajv, {...scope,  filename})      
         }  
       }
     }
@@ -114,6 +99,29 @@ async function checker() {
   return true
 }
 
+
+async function registerSchema(url: string|undefined, source: string, index: number, subfolder: string, schema: any) {
+  const $id = url === undefined 
+  ? `${source}:${index}`
+  : url.startsWith('http')
+  ? url 
+  : resolve(subfolder, url)
+
+  if (ajv.getSchema($id) === undefined)
+    await ajv.compileAsync({
+      ...schema ?? await readJson('compile', $id),
+      $id
+    })
+
+  return $id
+}
+
+function validate(data: any, $id: string) {
+  if (data !== null && typeof data === 'object')
+    // TODO and this schema
+    delete data.$schema
+  return ajv.validate($id, data)
+}
 
 function throwIfError({errors}: {errors?: any}, scope: any) {
   if (errors)
