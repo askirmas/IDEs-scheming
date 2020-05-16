@@ -1,0 +1,6 @@
+{
+  "oneOf": [
+    {"$ref": "./str-values.schema.json"},
+    {"$ref": "./int-values.schema.json"}
+  ]
+}

@@ -1,22 +1,39 @@
-import Ajv, { Options } from 'ajv'
+import Ajv from 'ajv'
 import fetch from 'node-fetch'
-import { readJson } from './readJson'
-import { ajv as ajvOpts } from './parameters.json'
 import { with$id } from './defs'
 
-const ajv = new Ajv({...ajvOpts as Options, loadSchema})
+const ajv = new Ajv({
+  "schemaId": "auto",
+  "extendRefs": true,
+  "jsonPointers": true,
+  "allErrors": true,
+  "verbose": true,
+  "ownProperties": true,
+  loadSchema,
+  //TODO Check these parameters
+  // addUsedSchema: true,
+  // async: true,
+  // inlineRefs: true,
+  // logger: console,
+  // loopRequired: Infinity,
+  // meta: true,
+  // missingRefs: "fail",
+  // serialize: false,
+  // sourceCode: true,
+  // transpile: "require",
+})
+
 export { ajv }
 
+//TODO `schema` couldn't be `:boolean` yet
 async function loadSchema(uri: string)  {
-  //TODO move to readJson?
-  if (uri.startsWith('http'))
-    return fetch(uri).then(r => r.json())
-  
-  const schema = await readJson("loadSchema", uri) as with$id
-  , {$id = ''} = schema
-  
-  if (typeof $id !== 'string' || !$id.startsWith('.'))
-    schema.$id = uri
+  const schema = (await
+    (uri.startsWith('http://') || uri.startsWith('https://')) 
+    ? fetch(uri).then(b => b.json())
+    : require(uri)
+  ) as with$id
+
+  schema.$id = uri
 
   return schema
 }

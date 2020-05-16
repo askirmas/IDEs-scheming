@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "propertyNames": {
+    "$ref": "./keys.schema.json"
+  },
+  "additionalProperties": {
+    "$ref": "./values.schema.json"
+  }
+}

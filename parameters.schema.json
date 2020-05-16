@@ -24,10 +24,6 @@
         }
       }
     },
-    "ajv": {
-      "title": "Read more: https://github.com/ajv-validator/ajv#options",
-      "type": "object"
-    },
     "globby": {
       "title": "Read more: https://github.com/sindresorhus/globby#options",
       "type": "object",
