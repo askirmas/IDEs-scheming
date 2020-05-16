@@ -1,7 +1,7 @@
-import { globby } from "./globby"
-import { patterns } from './parameters.json'
-import { readJson } from "./readJson"
-import { iVsCodeWorkSpace, iVsCodeSettings, iTask } from "./defs"
+import { globby } from "../globby"
+import { patterns } from '../parameters.json'
+import { readJson } from "../readJson"
+import { iVsCodeWorkSpace, iVsCodeSettings, iTask } from "../defs"
 import { dirname, basename } from "path"
 
 const {

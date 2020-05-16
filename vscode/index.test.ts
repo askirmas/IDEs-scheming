@@ -1,6 +1,6 @@
-import { vscodeTasks } from "./core";
+import { vscodeTasks } from ".";
 import Ajv from 'ajv'
-import schema from './itasks.schema.json'
+import schema from '../itasks.schema.json'
 
 const specDataDir = '__specs__'
 , suites = [
