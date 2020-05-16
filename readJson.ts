@@ -1,12 +1,18 @@
 import {readFile} from 'fs'
 import {dirname, resolve} from 'path' 
 
+const {parse} = JSON
+
 export {
   readJson
 }
 
-function readJson(calledBy: string, filename: string) {
-  //TODO async function
+//TODO async function
+function readJson(
+  calledBy: string,
+  filename: string,
+//  reviver?: Parameters<typeof JSON.parse>[1]
+) {
   return new Promise((res, rej) => 
     //TODO Change with `require()`
     readFile(filename, (error, body) => {
@@ -15,15 +21,17 @@ function readJson(calledBy: string, filename: string) {
           throw error
         res(
           //TODO jsonC?
-          JSON.parse(
+          parse(
             body.toString()
+            // like inline revi
             .replace(
               /"(\$ref|\$schema)"\s*:\s*"(\.[^"]+)"/gs,
               (substring, $k, path?: string) =>
               !path
               ? substring
               :`"${$k}":"${resolve(dirname(filename), path)}"`
-            )             
+            ),
+            //TODO reviver
           )
         )
       }
