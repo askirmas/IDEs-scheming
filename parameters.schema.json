@@ -23,24 +23,6 @@
           }
         }
       }
-    },
-    "globby": {
-      "title": "Read more: https://github.com/sindresorhus/globby#options",
-      "type": "object",
-      "properties": {
-        "ignore": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "uri-reference"
-          },
-          "default": [
-            "tsconfig.json",
-            "package.json",
-            "package-lock.json"
-          ]
-        }  
-      }
     }
   }
 }

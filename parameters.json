@@ -4,16 +4,5 @@
       "settings": ".vscode/settings.json",
       "workspace": "*.code-workspace"  
     }
-  },
-  "globby": {
-    "gitignore": true,
-    "ignore": [
-      "tsconfig.json",
-      "package.json",
-      "package-lock.json"
-    ],  
-    "dot": true,
-    "suppressErrors": true,
-    "absolute": true  
   }
 }
