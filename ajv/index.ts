@@ -1,6 +1,6 @@
 import Ajv from 'ajv'
 import fetch from 'node-fetch'
-import { with$id } from './defs'
+import { i$id } from '../defs'
 
 const ajv = new Ajv({
   "schemaId": "auto",
@@ -31,7 +31,7 @@ async function loadSchema(uri: string)  {
     (uri.startsWith('http://') || uri.startsWith('https://')) 
     ? fetch(uri).then(b => b.json())
     : require(uri)
-  ) as with$id
+  ) as i$id
 
   schema.$id = uri
 

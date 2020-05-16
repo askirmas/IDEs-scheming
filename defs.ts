@@ -1,4 +1,4 @@
-export { iVsCodeWorkSpace, iVsCodeSettings, iVsCodeSchemaEntry, with$id, iTask } 
+export { iVsCodeWorkSpace, iVsCodeSettings, iVsCodeSchemaEntry, i$id, iTask } 
 
 type iTask
 = {
@@ -25,4 +25,4 @@ type iVsCodeWorkSpace = Partial<{
   "settings": iVsCodeSettings
 }>
 
-type with$id = {$id?: string}
+type i$id = {$id: string}

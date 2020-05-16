@@ -1,9 +1,9 @@
 import { resolve } from 'path'
-import { ajv } from './ajv'
+import { ajv } from '.'
 
 const r = (...chunks: string[]) => resolve(__dirname, ...chunks)
 , $schemas = [
-  r('./__specs__/refs/record.schema.json'),
+  r('../__specs__/refs/record.schema.json'),
   'https://askirmas.github.io/jest.schema.json'
 ]
 
@@ -29,6 +29,6 @@ describe($schemas[1], () => {
   beforeAll(() => ajv.compileAsync({$ref: $schema}))  
 
   it('./jest.config.json', () => expect(ajv.validate($schema, 
-    require('./jest.config.json')
+    require('../jest.config.json')
   )).toBe(true))
 })

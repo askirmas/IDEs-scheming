@@ -1,16 +1,16 @@
-import {gitModulesPaths} from './gitModulesPaths'
+import {gitSubmodulesPaths} from './gitSubmodulesPaths'
 
-it('empty', () => expect(gitModulesPaths(`
+it('empty', () => expect(gitSubmodulesPaths(`
 `)).toStrictEqual([
 ]))
 
-it('1 path', () => expect(gitModulesPaths(
+it('1 path', () => expect(gitSubmodulesPaths(
   'path=patterning'
 )).toStrictEqual([
   'patterning'
 ]))
 
-it('.gitmodules', () => expect(gitModulesPaths(`
+it('.gitmodules', () => expect(gitSubmodulesPaths(`
 [submodule "patterning"]\n
 	path = patterning  \n
   url = https://github.com/askirmas/patterning.git\n

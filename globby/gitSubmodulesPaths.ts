@@ -1,8 +1,8 @@
 export {
-  gitModulesPaths as gitModulesPaths
+  gitSubmodulesPaths as gitSubmodulesPaths
 }
 
-function gitModulesPaths(content: string) {
+function gitSubmodulesPaths(content: string) {
   //TODO check path with spaces
   const parser = /^\s*path\s*=\s*(.+)$/gm
   , $return: string[] = []
@@ -11,3 +11,4 @@ function gitModulesPaths(content: string) {
     $return.push(result[1].trim())
   return $return
 }
+

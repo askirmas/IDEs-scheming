@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { dirname, join, resolve } from 'path' 
 import { ajv } from './ajv'
-import { g } from './g'
+import { globby } from './globby'
 import { readJson } from './readJson'
 import { units, notEachUnitShouldHaveSchema } from './scheming.config.json'
 import { patterns } from "./parameters.json"
@@ -31,11 +31,11 @@ async function checker() {
   const jsons2Check = new Set(
     notEachUnitShouldHaveSchema
     ? []
-    : await g(units)
+    : await globby(units)
   )
   //vscodeTasks()
   , tasks: Map<string, [string, iVsCodeSchemaEntry[]]> = new Map(await Promise.all([
-      ...(await g(patterns.vscode.workspace))
+      ...(await globby(patterns.vscode.workspace))
       .map(async filename => [
         filename,
         [
@@ -45,7 +45,7 @@ async function checker() {
           .settings?.['json.schemas']  
         ]
       ] as [string, [string, iVsCodeSchemaEntry[]]]),
-      ...(await g(patterns.vscode.settings))
+      ...(await globby(patterns.vscode.settings))
       .map(async filename => [
         filename, 
         [
@@ -76,7 +76,7 @@ async function checker() {
         throw {...scope, message: "Empty `fileMatch`"}
 
       for (const filePattern of fileMatch) {
-        const files = await g(filePattern, {cwd: subfolder})
+        const files = await globby(filePattern, {cwd: subfolder})
         if (!files.length)
           throw {...scope, filePattern, message: "No files was found"}
   

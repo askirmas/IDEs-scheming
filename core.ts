@@ -1,4 +1,4 @@
-import { g } from "./g"
+import { globby } from "./globby"
 import { patterns } from './parameters.json'
 import { readJson } from "./readJson"
 import { iVsCodeWorkSpace, iVsCodeSettings, iTask } from "./defs"
@@ -22,7 +22,7 @@ async function vscodeTasks(cwd?: string) {
   }
   , [wsFiles, setFiles] = await Promise.all(
     [workspace, settings]
-    .map(p => g(p, opts))
+    .map(p => globby(p, opts))
   )
   , tasks: iTask[] = [];
   
