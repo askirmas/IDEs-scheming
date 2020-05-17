@@ -1,4 +1,5 @@
 import globby from 'globby'
+import { resolve } from 'path'
 
 type GlobbyOptions = Parameters<typeof globby>[1]
 
@@ -19,11 +20,13 @@ export {
 }
 
 function g(patterns: Parameters<typeof globby>[0], opts?: GlobbyOptions) {
-  return globby(
-    patterns,
-    {
-      ...globbyOpts,
-      ...opts
-    } 
+  //Due to https://github.com/sindresorhus/globby/issues/133
+  const {absolute, ...o} = {...globbyOpts, ...opts}
+  , cwd = o.cwd ?? process.cwd()
+  , $return = globby(patterns, o)
+  return (!absolute)
+  ? $return
+  : $return.then(filenames =>
+    filenames.map(filename => resolve(cwd, filename))
   )
 }

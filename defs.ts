@@ -1,4 +1,7 @@
-export type iTask= iTaskMeta & iVsCodeSchemaEntry
+export type iTask = iTaskMeta & iVsCodeSchemaEntry & {
+  files: string[][]
+}
+
 export type iTaskMeta = {
   source: string
   cwd: string
@@ -16,11 +19,11 @@ export type iVsCodeSettings = Partial<{
   "json.schemas": iVsCodeSchemaEntry[]
 }>
 
-export type iVsCodeSchemaEntry = Partial<{
+export type iVsCodeSchemaEntry = {
   "fileMatch": string[]
-  "url": string
-  "schema": any
-}>
+  "url"?: string
+  "schema"?: any
+}
 
 
 export type i$id = {$id: string}

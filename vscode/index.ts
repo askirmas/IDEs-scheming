@@ -28,11 +28,7 @@ async function vscodeTasks(cwd?: string) {
     const cwd = cwds[i]
     , entries = await Promise.all(
       vsEntries
-      .map(p => globby(p, {
-        cwd,
-        //Due to https://github.com/sindresorhus/globby/issues/133
-        gitignore: false
-      }))
+      .map(p => globby(p, {cwd}))
     )
 
     for (let e = entries.length; e--;) {
@@ -71,15 +67,23 @@ async function vscodeTasks(cwd?: string) {
 
         if (!settings)
           continue
-        const records = settings[key] as undefined | typeof tasks
+        const records = settings[key]
         
         if (!records)
           continue
-        records.forEach((record, index) => {
+
+        for (let index = records.length; index--;) {
           const meta: iTaskMeta = {source: file, cwd, index}
-          Object.assign(record, meta)
-        })
-        tasks.push(...records)
+          , record = records[index]
+          , {fileMatch} = record
+          , {length} = fileMatch
+          , files: iTask["files"] = new Array(length)
+
+          for (let i = length; i--;)
+            files[i] = (await globby(fileMatch[i], {cwd, absolute: false}))
+            .map(f => resolve(cwd, f))
+          tasks.push({...record, ...meta, files})
+        }
       }  
     }     
   }

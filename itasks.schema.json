@@ -6,8 +6,40 @@
   "definitions": {
     "iTask": {
       "type": "object",
-      "required": ["cwd", "source", "index"],
-      "additionalProperties": false,
+      "allOf": [
+        {"$ref": "#/definitions/iTaskMeta"},
+        {"$ref": "#/definitions/iTaskMeta/definitions/required"},
+        {"$ref": "#/definitions/iVsCodeSchemaEntry"},
+        {"$ref": "#/definitions/iVsCodeSchemaEntry/definitions/required"}
+      ],
+      "required": ["files"],
+      "propertyNames": {
+        "anyOf": [
+          {"$ref": "#/definitions/iTaskMeta/definitions/propertyNames"},
+          {"$ref": "#/definitions/iVsCodeSchemaEntry/definitions/propertyNames"},
+          {"propertyNames": {"enum": ["files"]}}
+        ]
+      },
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string" 
+            }  
+          }
+        }
+      }
+    },
+    "iTaskMeta": {
+      "definitions": {
+        "propertyNames": {
+          "enum": ["cwd", "source", "index"]
+        },
+        "required": {"required": ["cwd", "source", "index"]}
+      },
+      "type": "object",
       "properties": {
         "source": {
           "type": "string",
@@ -19,7 +51,20 @@
         },
         "index": {
           "type": "number"
+        }
+      }
+    },
+    "iVsCodeSchemaEntry": {
+      "definitions": {
+        "propertyNames": {
+          "enum": [
+            "fileMatch", "url", "schema"
+          ]
         },
+        "required": {"required": []}
+      },
+      "type": "object",
+      "properties": {
         "fileMatch": {
           "type": "array",
           "items": {
@@ -29,8 +74,7 @@
         "url": {
           "type": "string",
           "format": "uri-reference"
-        },
-        "schema": true
+        }
       }
     }
   }
