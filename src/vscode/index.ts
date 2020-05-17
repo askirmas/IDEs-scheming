@@ -2,10 +2,9 @@ import { globby } from "../globby"
 import { patterns } from './parameters.json'
 import { iVsCodeWorkSpace, iVsCodeSettings, iTask, iTaskMeta } from "../defs"
 import { /*dirname, basename,*/ resolve } from "path"
-import { readFile } from "fs"
+import { readAsJson } from "../readAsJson"
 
-const {parse} = JSON
-, {
+const {
     workspace, settings
 } = patterns
 , key = 'json.schemas' as const
@@ -62,7 +61,6 @@ async function vscodeTasks(cwd?: string) {
           case 1:
             settings = data as iVsCodeSettings
             break
-          default:
         }
 
         if (!settings)
@@ -89,14 +87,4 @@ async function vscodeTasks(cwd?: string) {
   }
 
   return tasks
-}
-
-function readAsJson(filename: string) {
-  return new Promise((res, rej) =>
-    readFile(filename, (err, content) =>
-      err
-      ? rej(err)
-      : res(parse(content.toString()))
-    )
-  )
 }

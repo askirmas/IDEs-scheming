@@ -14,9 +14,9 @@
     },
     {
       "fileMatch": [
-        "/scheming.config.json"
+        "scheming.config.json"
       ],
-      "url": "./config.schema.json"
+      "url": "./src/config.schema.json"
     }
   ]
 }

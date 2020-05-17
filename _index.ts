@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import { dirname, join, resolve } from 'path' 
-import { ajv } from './ajv'
-import { globby } from './globby'
+import { ajv } from './src/ajv'
+import { globby } from './src/globby'
 import { readJson } from './readJson'
 import { units, notEachUnitShouldHaveSchema } from './scheming.config.json'
-import { patterns } from "./vscode/parameters.json"
-import { iVsCodeSchemaEntry, iVsCodeWorkSpace, iVsCodeSettings } from './defs'
+import { patterns } from "./src/vscode/parameters.json"
+import { iVsCodeSchemaEntry, iVsCodeWorkSpace, iVsCodeSettings } from './src/defs'
 
 const key = 'json.schemas' as const
 

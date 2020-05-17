@@ -13,7 +13,7 @@
   "coveragePathIgnorePatterns": [
     "/node_modules/",
     "/readJson.ts",
-    "/index.ts"
+    "/_index.ts"
   ],
   "testPathIgnorePatterns": [
     "/node_modules/",

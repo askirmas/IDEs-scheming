@@ -1,5 +1,5 @@
 import { resolve } from 'path'
-import { ajv } from '.'
+import { ajv } from '../src/ajv'
 
 const r = (...chunks: string[]) => resolve(__dirname, ...chunks)
 , $schemas = [

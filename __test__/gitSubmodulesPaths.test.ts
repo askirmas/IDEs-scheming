@@ -1,4 +1,4 @@
-import {gitSubmodulesPaths} from './gitSubmodulesPaths'
+import {gitSubmodulesPaths} from '../src/globby/gitSubmodulesPaths'
 
 it('empty', () => expect(gitSubmodulesPaths(`
 `)).toStrictEqual([

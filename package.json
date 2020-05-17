@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "./docs/dist/index.js",
-  "esnext": "./index.ts",
+  "esnext": "./src/index.ts",
   "bin": "./docs/dist/index.js",
   "files": [
     "./dist"
