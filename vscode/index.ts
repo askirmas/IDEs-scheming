@@ -1,6 +1,6 @@
 import { globby } from "../globby"
 import { patterns } from './parameters.json'
-import { iVsCodeWorkSpace, iVsCodeSettings, iTask } from "../defs"
+import { iVsCodeWorkSpace, iVsCodeSettings, iTask, iTaskMeta } from "../defs"
 import { /*dirname, basename,*/ resolve } from "path"
 import { readFile } from "fs"
 
@@ -72,13 +72,13 @@ async function vscodeTasks(cwd?: string) {
         if (!settings)
           continue
         const records = settings[key] as undefined | typeof tasks
-        , meta /*iTask*/ = {source: file, cwd}
+        
         if (!records)
           continue
-        records.forEach((record, index) => Object.assign(record,
-          meta,
-          {index}
-        ))
+        records.forEach((record, index) => {
+          const meta: iTaskMeta = {source: file, cwd, index}
+          Object.assign(record, meta)
+        })
         tasks.push(...records)
       }  
     }     

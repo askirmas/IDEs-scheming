@@ -10,10 +10,12 @@
   ],
   "scripts": {
     "test": "tsc --noEmit && jest --detectLeaks --detectOpenHandles",
-    "test:dev": "jest --detectOpenHandles --detectLeaks --runInBand --logHeapUsage --watch",
+    "test:dev": "node --expose-gc node_modules/.bin/jest --detectOpenHandles --detectLeaks --runInBand --logHeapUsage --watch",
     "postinstall": "git-hooks-wrapper init && git config include.path ../.gitconfig",
-    "prebuild": "npm run test",
-    "build": "rm -rf docs/dist && tsc && chmod +x ./docs/dist/index.js && ./docs/dist/index.js && echo 'done'"
+    "prebuild": "npm run test && rm -rf docs/dist",
+    "build:dry": "tsc",
+    "postbuild": "chmod +x ./docs/dist/index.js && ./docs/dist/index.js",
+    "build": "npm run build:dry"
   },
   "repository": {
     "type": "git",
