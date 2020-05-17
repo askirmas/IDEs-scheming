@@ -12,6 +12,11 @@
   },
   "coveragePathIgnorePatterns": [
     "/node_modules/",
-    "/readJson.ts"
+    "/readJson.ts",
+    "/index.ts"
+  ],
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "dist"
   ]
 }

@@ -19,9 +19,9 @@ type iVsCodeSettings = Partial<{
 }>
 
 type iVsCodeWorkSpace = Partial<{
-  "folders": {
+  "folders": Array<{
     "path": string
-  }[]
+  }>
   "settings": iVsCodeSettings
 }>
 

@@ -1,0 +1,19 @@
+{
+  "folders": [],
+  "settings": {
+    "json.schemas": [
+      {
+        "fileMatch": [
+          "*.schema.*json"
+        ],
+        "url": "http://json-schema.org/draft-07/schema"
+      },
+      {
+        "fileMatch": [
+          "*.record.*json"
+        ],
+        "url": "./record.schema.json"
+      }
+    ]
+  }
+}

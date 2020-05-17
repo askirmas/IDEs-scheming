@@ -5,18 +5,26 @@ import schema from '../itasks.schema.json'
 const specDataDir = '__specs__'
 , suites = [
   [undefined, 4],
-  [`${specDataDir}/true`, 4],
-  [`${specDataDir}/at_settings`, 3],
-  [`${specDataDir}/at_settings2`, 3],
+  [`alone_json`, 0],
+  [`at_settings`, 4],
+  [`code-workspace`, 6],
+  [`code-workspace_2`, 6],
+  [`refs`, 2],
 ] as const
 , ajv = new Ajv({allErrors: true})
-, validator = ajv.compile(schema)
+, validate = ajv.compile(schema)
 
 describe(vscodeTasks.name, () => {
   for (const [folder, length] of suites)
     it(folder ?? '$cwd', async () => {
-      const output = await vscodeTasks(folder)  
+      const output = await vscodeTasks(
+        folder === undefined
+        ? undefined
+        : `${specDataDir}/${folder}`
+      ) 
+      
       expect(output).toHaveLength(length)
-      expect(validator(output)).toBe(true)
+      if (!validate(output))
+        throw new Error(ajv.errorsText(validate.errors))
     })
 })

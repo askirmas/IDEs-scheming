@@ -2,6 +2,7 @@
   "json.schemas": [
     {
       "fileMatch": [
+        "schema.json",
         "*.schema.*json"
       ],
       "url": "http://json-schema.org/draft-07/schema"
@@ -11,7 +12,7 @@
         "/root.json",
         "unit.json"
       ],
-      "url": "./schema.json"
+      "url": "./isObject.schema.json"
     },
     {
       "fileMatch": [
@@ -20,6 +21,12 @@
       "schema": {
         "type": "array"
       }
-    } 
+    },
+    {
+      "fileMatch": [
+        "*.object_array.*json"
+      ],
+      "url": "./object_array.schema.json"
+    }
   ]
 }

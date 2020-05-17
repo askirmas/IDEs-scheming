@@ -11,11 +11,7 @@
       "properties": {
         "source": {
           "type": "string",
-          "format": "uri-reference",
-          "oneOf": [
-            {"const": ".vscode/settings.json"},
-            {"pattern": "\\.code-workspace$"}
-          ]
+          "format": "uri-reference"
         },
         "cwd": {
           "type": "string",

@@ -9,7 +9,8 @@
     "./dist"
   ],
   "scripts": {
-    "test": "jest && tsc --noEmit",
+    "test": "jest --detectLeaks --detectOpenHandles && tsc --noEmit",
+    "test:dev": "jest --detectOpenHandles --detectLeaks --runInBand --logHeapUsage --watch",
     "postinstall": "git-hooks-wrapper init && git config include.path ../.gitconfig",
     "prebuild": "npm run test",
     "build": "rm -rf docs/dist && tsc && chmod +x ./docs/dist/index.js && ./docs/dist/index.js && echo 'done'"
@@ -41,6 +42,7 @@
     "git-hooks-wrapper": "^0.4.6",
     "jest": "^26.0.1",
     "ts-jest": "^25.5.1",
-    "typescript": "^3.9.2"
+    "typescript": "^3.9.2",
+    "weak-napi": "^2.0.1"
   }
 }
