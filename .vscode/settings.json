@@ -17,12 +17,6 @@
         "/scheming.config.json"
       ],
       "url": "./config.schema.json"
-    },
-    {
-      "fileMatch": [
-        "/parameters.json"
-      ],
-      "url": "./parameters.schema.json"
     }
   ]
 }

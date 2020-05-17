@@ -1,10 +1,9 @@
 {
   "$id": "xml-2.schema.json",
-  "$ref": "#XmlNode",
+  "$ref": "#/definitions/XmlNode",
   "$comment": "VSCODE: \"$ref 'XmlNode' in 'file:///.../schemas/xml-2.schema.json' can not be resolved.\" and OK with $ ajv -d ex1.xml.json -s schemas/xml-2.schema.json",
   "definitions": {
     "XmlNode": {
-      "$id": "#XmlNode",
       "type": "object",
       "additionalProperties": {
         "type": ["number", "boolean", "string"]
@@ -15,7 +14,7 @@
           "additionalItems": false,
           "items": {
             "oneOf": [
-              {"$ref": "#XmlNode"},
+              {"$ref": "#/definitions/XmlNode"},
               {"type": "string"}
             ]
           }

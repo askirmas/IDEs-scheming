@@ -4,8 +4,10 @@ import { ajv } from './ajv'
 import { globby } from './globby'
 import { readJson } from './readJson'
 import { units, notEachUnitShouldHaveSchema } from './scheming.config.json'
-import { patterns } from "./parameters.json"
+import { patterns } from "./vscode/parameters.json"
 import { iVsCodeSchemaEntry, iVsCodeWorkSpace, iVsCodeSettings } from './defs'
+
+const key = 'json.schemas' as const
 
 export default checker
 export {
@@ -35,23 +37,23 @@ async function checker() {
   )
   //vscodeTasks()
   , tasks: Map<string, [string, iVsCodeSchemaEntry[]]> = new Map(await Promise.all([
-      ...(await globby(patterns.vscode.workspace))
+      ...(await globby(patterns.workspace))
       .map(async filename => [
         filename,
         [
           dirname(filename),
-          (await readJson(patterns.vscode.workspace, filename) as iVsCodeWorkSpace)
+          (await readJson(patterns.workspace, filename) as iVsCodeWorkSpace)
           //TODO .folders
-          .settings?.['json.schemas']  
+          .settings?.[key]  
         ]
       ] as [string, [string, iVsCodeSchemaEntry[]]]),
-      ...(await globby(patterns.vscode.settings))
+      ...(await globby(patterns.settings))
       .map(async filename => [
         filename, 
         [
           join(dirname(filename), '..'),
-          (await readJson(patterns.vscode.settings, filename) as iVsCodeSettings)
-          ["json.schemas"]
+          (await readJson(patterns.settings, filename) as iVsCodeSettings)
+          [key]
         ]
       ] as [string, [string, iVsCodeSchemaEntry[]]])
   ]))

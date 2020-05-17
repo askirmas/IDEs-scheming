@@ -1,0 +1,6 @@
+{
+  "patterns": {
+    "settings": ".vscode/settings.json",
+    "workspace": "*.code-workspace"  
+  }
+}

@@ -9,7 +9,7 @@
     "./dist"
   ],
   "scripts": {
-    "test": "jest --detectLeaks --detectOpenHandles && tsc --noEmit",
+    "test": "tsc --noEmit && jest --detectLeaks --detectOpenHandles",
     "test:dev": "jest --detectOpenHandles --detectLeaks --runInBand --logHeapUsage --watch",
     "postinstall": "git-hooks-wrapper init && git config include.path ../.gitconfig",
     "prebuild": "npm run test",

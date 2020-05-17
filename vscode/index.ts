@@ -1,15 +1,14 @@
 import { globby } from "../globby"
-import { patterns } from '../parameters.json'
+import { patterns } from './parameters.json'
 import { iVsCodeWorkSpace, iVsCodeSettings, iTask } from "../defs"
 import { /*dirname, basename,*/ resolve } from "path"
 import { readFile } from "fs"
 
 const {parse} = JSON
 , {
-  vscode: {
-    settings, workspace
-  }
+    workspace, settings
 } = patterns
+, key = 'json.schemas' as const
 , vsEntries = [workspace, settings]
 
 export {
@@ -72,7 +71,7 @@ async function vscodeTasks(cwd?: string) {
 
         if (!settings)
           continue
-        const records = settings["json.schemas"] as undefined | typeof tasks
+        const records = settings[key] as undefined | typeof tasks
         , meta /*iTask*/ = {source: file, cwd}
         if (!records)
           continue
