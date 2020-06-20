@@ -10,6 +10,9 @@
       "statements": 100
     }
   },
+  "collectCoverageFrom": [
+    "*.[tj]sx?"
+  ],
   "coveragePathIgnorePatterns": [
     "/node_modules/",
     "/readJson.ts",
